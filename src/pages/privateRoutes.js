@@ -5,7 +5,7 @@ import AddManageUser from "./SideTabs/ManageUsers/Add/Index";
 import ManageUsers from "./SideTabs/ManageUsers/Index";
 import Reports from "./SideTabs/Reports/Index";
 import ViewReport from "./SideTabs/Reports/View/Index";
-import Transaction from "./SideTabs/Transaction/Index";
+import MakeAndModel from "./SideTabs/Transaction/Index";
 import UserContest from "./SideTabs/UserContest/Index";
 
 const privateRoutes = [
@@ -19,7 +19,7 @@ const privateRoutes = [
   { path: "/manage-contest/edit/:id", component: <AddContest /> },
   { path: "/reports", component: <Reports /> },
   { path: "/reports/view/:id", component: <ViewReport /> },
-  { path: "/transaction", component: <Transaction /> },
+  { path: "/make", component: <MakeAndModel /> },
 ];
 
 export default privateRoutes;

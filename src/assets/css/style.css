@@ -24,7 +24,8 @@ body {
   line-height: 26px;
   font-weight: 400;
   color: #000;
-  background-color: #e51c44;
+  background-color: #333;
+  /* background-color: #e51c44; */
 }
 
 a {

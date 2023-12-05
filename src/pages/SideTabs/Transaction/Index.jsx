@@ -6,7 +6,7 @@ import NonAuthLayout from "../../../Layout/NonAuthLayout";
 import { toast } from "react-toastify";
 import { listTransactions } from "../../../redux/states/transactions/thunks/listTransactions";
 
-const Transaction = () => {
+const MakeAndModel = () => {
   const { transactions } = useSelector((state) => state.transactions);
   const dispatch = useDispatch();
   const [requestDetails, setRequestDetails] = useState({
@@ -67,4 +67,4 @@ const Transaction = () => {
   );
 };
 
-export default Transaction;
+export default MakeAndModel;
