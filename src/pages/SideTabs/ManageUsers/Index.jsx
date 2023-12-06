@@ -28,11 +28,11 @@ const ManageUsers = () => {
     setRequest(updatedRequest);
   };
 
-  useEffect(() => {
-    dispatch(listUsers(request))
-      .unwrap()
-      .catch((error) => console.error(error.message));
-  }, [request]);
+  // useEffect(() => {
+  //   dispatch(listUsers(request))
+  //     .unwrap()
+  //     .catch((error) => console.error(error.message));
+  // }, [request]);
 
   console.log("Billa ", manage_user?.data);
 

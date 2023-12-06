@@ -5,6 +5,8 @@ import TableData from "./Component/TableData";
 import NonAuthLayout from "../../../Layout/NonAuthLayout";
 import { toast } from "react-toastify";
 import { listTransactions } from "../../../redux/states/transactions/thunks/listTransactions";
+import PromptModal from "./Component/PromptModal";
+import userImage from "../../../assets/images/user.jpg"
 
 const MakeAndModel = () => {
   const { transactions } = useSelector((state) => state.transactions);
@@ -13,23 +15,26 @@ const MakeAndModel = () => {
     limit: "10",
     page: 1,
   });
+  const [show, setShow] = useState(false);
 
-  const getTransactionsList = async () => {
-    try {
-      await dispatch(listTransactions())
-        .unwrap()
-        .catch((error) => toast.error(error.message));
-    } catch (error) {
-      toast.error(error.message);
-      console.log("transactions error", error);
-    }
-  };
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-  useEffect(() => {
-    getTransactionsList();
-  }, [requestDetails]);
+  // const getTransactionsList = async () => {
+  //   try {
+  //     await dispatch(listTransactions())
+  //       .unwrap()
+  //       .catch((error) => toast.error(error.message));
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //     console.log("transactions error", error);
+  //   }
+  // };
 
-  console.log("transactions", transactions);
+  // useEffect(() => {
+  //   getTransactionsList();
+  // }, [requestDetails]);
+
 
   return (
     <>
@@ -41,14 +46,14 @@ const MakeAndModel = () => {
                 <div className="Box py-3 pt-lg-4">
                   <div className="filterWrp mb-3 px-lg-5 px-3 d-flex aling-items-center flex-wrap justify-content-between gap-10">
                     <div className="left d-flex align-items-center gap-10 flex-wrap">
-                      <h2 className="m-0 fw-bold">Transactions</h2>
+                      <h2 className="m-0 fw-bold">Make Prompts</h2>
+
                     </div>
                     <div className="right d-flex align-items-center flex-wrap gap-10">
                       <div className="d-flex text-dark align-items-center btn justify-content-center rounded-pill gap-10">
-                        <p className="m-0 fw-normal text-muted">
-                          Total Earning
+                        <p className="m-0 fw-normal text-muted" onClick={handleShow} >
+                          Add Prompt
                         </p>
-                        $ {transactions.totalAmount}
                       </div>
                     </div>
                   </div>
@@ -56,10 +61,16 @@ const MakeAndModel = () => {
                     transactions={transactions}
                     requestDetails={requestDetails}
                     setRequestDetails={setRequestDetails}
+                    handleShow={handleShow}
                   />
                 </div>
               </Col>
             </Row>
+            <PromptModal
+              show={show}
+              handleClose={handleClose}
+
+            />
           </Container>
         </section>
       </NonAuthLayout>

@@ -16,31 +16,31 @@ const Dashboard = () => {
   const { blocked_user, manage_user } = useSelector((s) => s.user) ?? {};
   const { pieChartData } = useSelector((s) => s.dashboard);
 
-  useEffect(() => {
-    dispatch(dashboard())
-      .unwrap()
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
+  // useEffect(() => {
+  //   dispatch(dashboard())
+  //     .unwrap()
+  //     .catch((error) => {
+  //       toast.error(error.message);
+  //     });
+  // }, []);
 
-  let fetchData = async (name = "ManagerUser") => {
-    let request = { limit: 10, page: 1, showLoader: true };
+  // let fetchData = async (name = "ManagerUser") => {
+  //   let request = { limit: 10, page: 1, showLoader: true };
 
-    try {
-      if (name === "Block") {
-        await dispatch(listBlockUsers(request)).unwrap();
-      } else {
-        await dispatch(listUsers(request)).unwrap();
-      }
-    } catch (error) {
-      toast.error(error?.message);
-    }
-  };
+  //   try {
+  //     if (name === "Block") {
+  //       await dispatch(listBlockUsers(request)).unwrap();
+  //     } else {
+  //       await dispatch(listUsers(request)).unwrap();
+  //     }
+  //   } catch (error) {
+  //     toast.error(error?.message);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchData("ManagerUser");
-  }, []);
+  // useEffect(() => {
+  //   fetchData("ManagerUser");
+  // }, []);
 
   const pieData = {
     daily: {
