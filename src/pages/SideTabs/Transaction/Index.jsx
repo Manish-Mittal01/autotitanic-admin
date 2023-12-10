@@ -11,6 +11,10 @@ import userImage from "../../../assets/images/user.jpg"
 const MakeAndModel = () => {
   const { transactions } = useSelector((state) => state.transactions);
   const dispatch = useDispatch();
+  const [editValue, setEditValue] = useState()
+  const [update, setUpdate] = useState(false)
+  console.log(update, 'updateupdate');
+
   const [requestDetails, setRequestDetails] = useState({
     limit: "10",
     page: 1,
@@ -18,7 +22,10 @@ const MakeAndModel = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true);
+    setUpdate(false)
+  }
 
   // const getTransactionsList = async () => {
   //   try {
@@ -34,7 +41,7 @@ const MakeAndModel = () => {
   // useEffect(() => {
   //   getTransactionsList();
   // }, [requestDetails]);
-
+  console.log(editValue, 'editvalue');
 
   return (
     <>
@@ -62,6 +69,9 @@ const MakeAndModel = () => {
                     requestDetails={requestDetails}
                     setRequestDetails={setRequestDetails}
                     handleShow={handleShow}
+                    setEditValue={setEditValue}
+                    update={update}
+                    setUpdate={setUpdate}
                   />
                 </div>
               </Col>
@@ -69,6 +79,9 @@ const MakeAndModel = () => {
             <PromptModal
               show={show}
               handleClose={handleClose}
+              editValue={editValue}
+              setUpdate={setUpdate}
+              update={update}
 
             />
           </Container>

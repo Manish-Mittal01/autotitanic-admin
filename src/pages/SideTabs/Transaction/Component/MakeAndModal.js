@@ -13,10 +13,10 @@ const options = [
     { value: 'trucks', label: 'Trucks' },
     { value: 'farm', label: 'Farm' },
     { value: 'plant', label: 'Plant' },
-    { value: 'partAndAccessories', label: 'PartAndAccessories' },
+    { value: 'partAndAccessories', label: 'Part And Accessories' },
 ];
 
-const MakeAndModal = ({ show, handleClose }) => {
+const MakeAndModal = ({ show1, handleClose }) => {
     const [selectedOption, setSelectedOption] = useState([]);
     console.log(selectedOption, 'selectedOption');
 
@@ -43,7 +43,7 @@ const MakeAndModal = ({ show, handleClose }) => {
 
     return (
         <>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show1} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Prompt</Modal.Title>
                 </Modal.Header>

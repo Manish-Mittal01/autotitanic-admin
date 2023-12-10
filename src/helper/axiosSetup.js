@@ -17,6 +17,7 @@ export default function runAxiosSetup({ apiUrl, bearerToken, headers = {} }) {
       return response;
     },
     (error) => {
+      console.log("error", error)
       var errorObject = {};
       if (error.response) {
         errorObject.message = error.response.data.message || "Server Error!!!";
