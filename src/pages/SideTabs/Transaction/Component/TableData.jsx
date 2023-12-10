@@ -5,7 +5,6 @@ import MyPagination from "../../../../components/common/myPagination";
 import DeleteIcon from "../../../../assets/images/deleteIcon.png"
 import EditIcon from "../../../../assets/images/edit-icon.png"
 import { Button, Col, Container, Row } from "react-bootstrap";
-import MakeAndModal from "./MakeAndModal";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { deleteMake, makeList } from "../../../../redux/states/make/thunk";
@@ -20,7 +19,7 @@ const TableData = ({ transactions, requestDetails, setRequestDetails, handleShow
 
   const dispatch = useDispatch()
 
-  const { makeallList, imageUrl } = useSelector((state) => state.makeAndModal)
+  const { makeallList, imageUrl } = useSelector((state) => state.cre)
   console.log(imageUrl, 'imageUrlimageUrl');
   const editHandler = (value) => {
     setEditValue(value)
@@ -114,9 +113,7 @@ const TableData = ({ transactions, requestDetails, setRequestDetails, handleShow
         setRequestDetails={setRequestDetails}
         totalPosts={transactions.total_count}
       />
-      <MakeAndModal
-        show={show1}
-        handleClose={handleClose1} />
+
     </>
   );
 };
