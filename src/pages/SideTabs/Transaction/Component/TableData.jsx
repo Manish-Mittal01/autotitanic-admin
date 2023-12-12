@@ -8,19 +8,30 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { deleteMake, makeList } from "../../../../redux/states/make/thunk";
+import BrandModal from "./BrandModal";
+import { modalList } from "../../../../redux/states/brand/brandThunk";
 
 
 const TableData = ({ transactions, requestDetails, setRequestDetails, handleShow, setEditValue, setUpdate }) => {
   const [show1, setShow] = useState(false);
   const [makeId, setmakeId] = useState('')
+  console.log(makeId, 'makeIdddd')
 
   const handleClose1 = () => setShow(false);
-  const handleShow1 = () => setShow(true);
+  const handleShow1 = (data) => {
+    console.log(data._id, 'datadata')
+    const id = data?._id
+    if (id) {
+      setmakeId(id)
+
+    }
+    setShow(true);
+  }
 
   const dispatch = useDispatch()
 
-  const { makeallList, imageUrl } = useSelector((state) => state.cre)
-  console.log(imageUrl, 'imageUrlimageUrl');
+  const { makeallList, imageUrl } = useSelector((state) => state.makeAndModal)
+  console.log(makeallList.data, 'makeallList');
   const editHandler = (value) => {
     setEditValue(value)
     handleShow()
@@ -36,16 +47,19 @@ const TableData = ({ transactions, requestDetails, setRequestDetails, handleShow
   }
 
   useEffect(() => {
-    dispatch(makeList())
+    // const response=  dispatch(makeList()).unwrap()
+    const response = dispatch(makeList()).unwrap()
+    console.log(response, 'responseresponse')
+    dispatch(modalList())
   }, [])
   return (
     <>
       <div className="table-responsive">
 
 
-        {makeallList.data &&
+        {makeallList?.data?.items &&
 
-          makeallList.data?.map((data, idx) => {
+          makeallList?.data?.items?.map((data, idx) => {
             return (
               <>
                 <table className="table commonTable">
@@ -96,12 +110,17 @@ const TableData = ({ transactions, requestDetails, setRequestDetails, handleShow
                         <img className='delete_image' src={DeleteIcon} />
                       </td>
                     </tr>
-                    <Button className="m-3" onClick={handleShow}>Add Section</Button>
+                    <Button className="m-3" onClick={() => handleShow1(data)}>Add Modal</Button>
                   </tbody>
                 </table>
               </>
             );
           })}
+        <BrandModal
+          handleClose1={handleClose1}
+          show1={show1}
+          makeId={makeId}
+        />
 
 
 

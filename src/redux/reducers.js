@@ -11,6 +11,7 @@ import subAdminReducer from "./states/sub_admin/reducer";
 import settingReducer from "./states/settings/slice";
 import commonReducer from "./states/common/reducer";
 import makeSlice from "./states/make/slice";
+import brandslice from "./states/brand/brandslice";
 // import imageUploadUrlReducer from "./states/make/uploadImageThunk";
 // import addBrandReducer from "./states/make/addbrandthunk";
 
@@ -25,6 +26,8 @@ const rootReducer = combineReducers({
   settings: settingReducer,
   common: commonReducer,
   makeAndModal: makeSlice,
+  brandModal: brandslice,
+
 
 });
 

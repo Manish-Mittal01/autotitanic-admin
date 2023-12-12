@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoImage from '../../../../assets/images/logo.jpg'
-import { addBrand, editBrand, imageUploadUrl } from '../../../../redux/states/make/thunk';
+import { addBrand, editBrand, imageUploadUrl, makeList } from '../../../../redux/states/make/thunk';
 
 const options = [
   { value: 'cars', label: 'Cars' },
@@ -30,7 +30,7 @@ const PromptModal = ({ show, handleClose, editValue, update }) => {
     photo: null,
     logo: '',
     makeId: '',
-    vehicleType: []
+    type: []
   });
   console.log(formData, 'formData')
 
@@ -38,10 +38,8 @@ const PromptModal = ({ show, handleClose, editValue, update }) => {
   useEffect(() => {
     if (editValue) {
       setFormData({
-        label: editValue.label,
-        value: editValue.value,
-        logo: editValue.logo,
-        makeId: editValue?._id
+        ...editValue,
+        makeId: editValue?._id,
       });
     }
   }, [editValue]);
@@ -63,13 +61,35 @@ const PromptModal = ({ show, handleClose, editValue, update }) => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!update) {
-      dispatch(addBrand(formData))
+      try {
+        const response = await dispatch(addBrand(formData)).unwrap()
+        if (response.status) {
+          dispatch(makeList())
+        }
+        console.log(response, 'response')
+
+      } catch (error) {
+        console.log(error)
+      }
+      formData('')
       handleClose();
     }
     else if (update) {
-      dispatch(editBrand(formData))
+      try {
+        const response = await dispatch(editBrand(formData)).unwrap()
+        if (response.status) {
+          dispatch(makeList())
+        }
+        console.log(response, 'response')
+
+      } catch (error) {
+        console.log(error)
+      }
+      formData('')
+      handleClose();
+
     }
 
   };
@@ -90,7 +110,7 @@ const PromptModal = ({ show, handleClose, editValue, update }) => {
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Prompt</Modal.Title>
+          <Modal.Title>{update ? 'Update Make' : 'Add Make'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>

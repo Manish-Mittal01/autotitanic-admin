@@ -1,8 +1,7 @@
 import { createSlice, current } from "@reduxjs/toolkit";
-import { makeList } from "./thunk";
+import { addModal, modalList } from "./brandThunk";
 const initialState = {
     makeallList: [],
-    imageUrl: []
 };
 
 const slice = createSlice({
@@ -10,12 +9,19 @@ const slice = createSlice({
     initialState: { ...initialState },
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(makeList.pending, (state, action) => {
+        builder.addCase(modalList.pending, (state, action) => {
         });
-        builder.addCase(makeList.fulfilled, (state, action) => {
+        builder.addCase(modalList.fulfilled, (state, action) => {
             state.makeallList = action.payload;
         });
-        builder.addCase(makeList.rejected, (state, action) => {
+        builder.addCase(modalList.rejected, (state, action) => {
+        });
+        builder.addCase(addModal.pending, (state, action) => {
+        });
+        builder.addCase(addModal.fulfilled, (state, action) => {
+            state.makeallList = action.payload;
+        });
+        builder.addCase(addModal.rejected, (state, action) => {
         });
 
     },

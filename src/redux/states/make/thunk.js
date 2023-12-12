@@ -56,7 +56,6 @@ export const addBrand = createAsyncThunk(
       let response = (await axios.post("/api/v1/addMake", request))
         ?.data;
       console.log("Call Finished", response);
-      dispatc
       return response;
     } catch (error) {
       console.log("error====>", error);

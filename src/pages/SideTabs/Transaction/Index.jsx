@@ -59,7 +59,7 @@ const MakeAndModel = () => {
                     <div className="right d-flex align-items-center flex-wrap gap-10">
                       <div className="d-flex text-dark align-items-center btn justify-content-center rounded-pill gap-10">
                         <p className="m-0 fw-normal text-muted" onClick={handleShow} >
-                          Add Prompt
+                          Add Make
                         </p>
                       </div>
                     </div>
