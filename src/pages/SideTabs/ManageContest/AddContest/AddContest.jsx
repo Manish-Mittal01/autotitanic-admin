@@ -7,11 +7,11 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import NonAuthLayout from "../../../../Layout/NonAuthLayout";
 import { addContest } from "../../../../redux/states/contest/thunks/addContest";
 import axios from "axios";
-import { imageUpload } from "../../../../redux/states/common/thunks/imageUpload";
 import { toast } from "react-toastify";
 import fetchContest from "../../../../redux/states/contest/thunks/fetchContest";
 import { editContest } from "../../../../redux/states/contest/thunks/editContest";
 import { cloneDeep } from "lodash";
+import { imageUpload } from "../../../../redux/states/common/thunk";
 
 const AddContest = () => {
   const dispatch = useDispatch();

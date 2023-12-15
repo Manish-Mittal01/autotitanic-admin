@@ -4,11 +4,11 @@ import NonAuthLayout from "../../../../Layout/NonAuthLayout";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Switch from "react-switch";
-import { imageUpload } from "../../../../redux/states/common/thunks/imageUpload";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../../../redux/states/user/thunks/addUser";
 import { fetchUser } from "../../../../redux/states/user/thunks/fetchUser";
 import { editUser } from "../../../../redux/states/user/thunks/editUser";
+import { imageUpload } from "../../../../redux/states/common/thunk";
 
 const AddManageUser = () => {
   const dispatch = useDispatch();
@@ -87,9 +87,9 @@ const AddManageUser = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchUser({ data: { id }, showLoader: true })).unwrap().catch((error) =>
-        console.error(error.message)
-      );
+      dispatch(fetchUser({ data: { id }, showLoader: true }))
+        .unwrap()
+        .catch((error) => console.error(error.message));
     }
   }, [id]);
 

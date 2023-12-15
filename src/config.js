@@ -1,1 +1,1 @@
-export const baseApiUrl = "https://autotitanic.onrender.com/";
+export const baseApiUrl = "https://autotitanic.onrender.com/api/v1/";

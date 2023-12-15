@@ -1,39 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-import Select from 'react-select';
-import { useDispatch, useSelector } from 'react-redux';
-import LogoImage from '../../../../assets/images/logo.jpg'
-import { addBrand, editBrand, imageUploadUrl, makeList } from '../../../../redux/states/make/thunk';
+import React, { useState, useEffect } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import Select from "react-select";
+import { useDispatch, useSelector } from "react-redux";
+import LogoImage from "../../../../assets/images/logo.jpg";
+import {
+  addBrand,
+  editBrand,
+  imageUploadUrl,
+} from "../../../../redux/states/makeAndModel/thunk";
 
 const options = [
-  { value: 'cars', label: 'Cars' },
-  { value: 'bikes', label: 'Bikes' },
-  { value: 'vans', label: 'Vans' },
-  { value: 'motorhomes', label: 'Motorhomes' },
-  { value: 'carvana', label: 'Carvana' },
-  { value: 'trucks', label: 'Trucks' },
-  { value: 'farm', label: 'Farm' },
-  { value: 'plant', label: 'Plant' },
-  { value: 'partAndAccessories', label: 'PartAndAccessories' },
+  { value: "cars", label: "Cars" },
+  { value: "bikes", label: "Bikes" },
+  { value: "vans", label: "Vans" },
+  { value: "motorhomes", label: "Motorhomes" },
+  { value: "carvana", label: "Carvana" },
+  { value: "trucks", label: "Trucks" },
+  { value: "farm", label: "Farm" },
+  { value: "plant", label: "Plant" },
+  { value: "partAndAccessories", label: "PartAndAccessories" },
 ];
 
 const PromptModal = ({ show, handleClose, editValue, update }) => {
-  const dispatch = useDispatch()
-  const { makeallList, imageUrl } = useSelector((state) => state.makeAndModal)
+  const dispatch = useDispatch();
+  const { makeallList, imageUrl } = useSelector((state) => state.makeAndModal);
 
   const [selectedOption, setSelectedOption] = useState([]);
   const [formData, setFormData] = useState({
-    label: '',
-    value: '',
+    label: "",
+    value: "",
     photo: null,
-    logo: '',
-    makeId: '',
-    type: []
+    logo: "",
+    makeId: "",
+    type: [],
   });
-  console.log(formData, 'formData')
-
+  console.log(formData, "formData");
 
   useEffect(() => {
     if (editValue) {
@@ -54,7 +57,7 @@ const PromptModal = ({ show, handleClose, editValue, update }) => {
   }, [imageUrl]);
 
   const handleChange = (e) => {
-    if (e.target.name === 'photo') {
+    if (e.target.name === "photo") {
       setFormData({ ...formData, photo: e.target.files[0] });
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -64,53 +67,46 @@ const PromptModal = ({ show, handleClose, editValue, update }) => {
   const handleSubmit = async () => {
     if (!update) {
       try {
-        const response = await dispatch(addBrand(formData)).unwrap()
+        const response = await dispatch(addBrand(formData)).unwrap();
         if (response.status) {
-          dispatch(makeList())
+          // dispatch(makeList());
         }
-        console.log(response, 'response')
-
+        console.log(response, "response");
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-      formData('')
+      formData("");
       handleClose();
-    }
-    else if (update) {
+    } else if (update) {
       try {
-        const response = await dispatch(editBrand(formData)).unwrap()
+        const response = await dispatch(editBrand(formData)).unwrap();
         if (response.status) {
-          dispatch(makeList())
+          // dispatch(makeList());
         }
-        console.log(response, 'response')
-
+        console.log(response, "response");
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-      formData('')
+      formData("");
       handleClose();
-
     }
-
   };
   const uploadImage = () => {
     if (formData?.photo) {
-      dispatch(imageUploadUrl(formData?.photo))
-
+      dispatch(imageUploadUrl(formData?.photo));
     }
-  }
+  };
   const handleSelectChange = (selectedOptions) => {
     const selectedValues = selectedOptions.map((option) => option.value);
     setFormData({ ...formData, vehicleType: selectedValues });
     setSelectedOption(selectedOptions);
   };
 
-
   return (
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>{update ? 'Update Make' : 'Add Make'}</Modal.Title>
+          <Modal.Title>{update ? "Update Make" : "Add Make"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -127,16 +123,19 @@ const PromptModal = ({ show, handleClose, editValue, update }) => {
 
             <Form.Group controlId="formPhoto">
               <Form.Label>Upload Photo</Form.Label>
-              <Form.Control
-                type="file"
-                name="photo"
-                onChange={handleChange}
-              />
-              <Button className="m-3" onClick={uploadImage}>Create Image Url</Button>
+              <Form.Control type="file" name="photo" onChange={handleChange} />
+              <Button className="m-3" onClick={uploadImage}>
+                Create Image Url
+              </Button>
             </Form.Group>
 
             <Form.Group controlId="formLogo">
-              {formData?.logo && <img src={formData?.logo} style={{ height: '100px', width: '100px' }} />}
+              {formData?.logo && (
+                <img
+                  src={formData?.logo}
+                  style={{ height: "100px", width: "100px" }}
+                />
+              )}
             </Form.Group>
 
             <Form.Group controlId="formVehicleType">

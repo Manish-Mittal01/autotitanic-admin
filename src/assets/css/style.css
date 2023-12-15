@@ -181,7 +181,8 @@ textarea.form-control {
 }
 
 .Box {
-  background-color: #fffbf2 !important;
+  background-color: #fff !important;
+  /* background-color: #fffbf2 !important; */
 }
 
 .box2 {
@@ -677,4 +678,8 @@ path:nth-child(3) {
   z-index: 9;
   cursor: pointer;
   opacity: 0;
+}
+
+.secondaryColor th {
+  background-color: #ebeaea !important;
 }

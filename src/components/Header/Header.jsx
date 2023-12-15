@@ -10,7 +10,6 @@ import UpdateProfile from "../Modals/editProfile";
 import { logout } from "../../redux/states/auth/actions";
 import { editProfile } from "../../redux/states/auth/thunks/profile/editProfile";
 import { getProfile } from "../../redux/states/auth/thunks/profile/getProfile";
-import { imageUpload } from "../../redux/states/common/thunks/imageUpload";
 
 const Header = ({ sidebar, setSidebar }) => {
   const { admin } = useSelector((s) => s.auth) ?? {};
@@ -32,15 +31,10 @@ const Header = ({ sidebar, setSidebar }) => {
   const handleUpdateProfile = async (values) => {
     console.log("handleUpdateProfile");
     try {
-      const imageUrl = await dispatch(
-        imageUpload({ file: values.image })
-      ).unwrap();
-
       const request = {
         name: values.name,
         email: values.email,
         full_phone_number: values.full_phone_number,
-        image: imageUrl?.body[0]?.image_url,
       };
 
       const response = await dispatch(editProfile(request)).unwrap();
