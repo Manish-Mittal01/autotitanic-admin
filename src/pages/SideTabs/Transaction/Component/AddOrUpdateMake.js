@@ -4,12 +4,6 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
-import LogoImage from "../../../../assets/images/logo.jpg";
-import {
-  addBrand,
-  editBrand,
-  imageUploadUrl,
-} from "../../../../redux/states/makeAndModel/thunk";
 
 const options = [
   { value: "cars", label: "Cars" },
@@ -23,10 +17,14 @@ const options = [
   { value: "partAndAccessories", label: "PartAndAccessories" },
 ];
 
-const PromptModal = ({ show, handleClose, editValue, update }) => {
+const AddOrUpdateMake = ({
+  userAction,
+  setUserAction,
+  handleMakeList,
+  update,
+}) => {
   const dispatch = useDispatch();
-  const { makeallList, imageUrl } = useSelector((state) => state.makeAndModal);
-
+  const imageUrl = "";
   const [selectedOption, setSelectedOption] = useState([]);
   const [formData, setFormData] = useState({
     label: "",
@@ -38,14 +36,9 @@ const PromptModal = ({ show, handleClose, editValue, update }) => {
   });
   console.log(formData, "formData");
 
-  useEffect(() => {
-    if (editValue) {
-      setFormData({
-        ...editValue,
-        makeId: editValue?._id,
-      });
-    }
-  }, [editValue]);
+  const handleClose = () => {
+    setUserAction(null);
+  };
 
   useEffect(() => {
     if (imageUrl?.data?.length > 0 && imageUrl.data[0]?.url) {
@@ -91,20 +84,16 @@ const PromptModal = ({ show, handleClose, editValue, update }) => {
       handleClose();
     }
   };
+
   const uploadImage = () => {
     if (formData?.photo) {
       dispatch(imageUploadUrl(formData?.photo));
     }
   };
-  const handleSelectChange = (selectedOptions) => {
-    const selectedValues = selectedOptions.map((option) => option.value);
-    setFormData({ ...formData, vehicleType: selectedValues });
-    setSelectedOption(selectedOptions);
-  };
 
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={!!userAction} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{update ? "Update Make" : "Add Make"}</Modal.Title>
         </Modal.Header>
@@ -122,11 +111,11 @@ const PromptModal = ({ show, handleClose, editValue, update }) => {
             </Form.Group>
 
             <Form.Group controlId="formPhoto">
-              <Form.Label>Upload Photo</Form.Label>
-              <Form.Control type="file" name="photo" onChange={handleChange} />
-              <Button className="m-3" onClick={uploadImage}>
-                Create Image Url
-              </Button>
+              <Form.Label className="my-3">Make Logo</Form.Label>
+              <div class="FileExplorerBtnwrapper">
+                <Button className="pointer">Upload logo</Button>
+                <input type="file" />
+              </div>
             </Form.Group>
 
             <Form.Group controlId="formLogo">
@@ -142,7 +131,9 @@ const PromptModal = ({ show, handleClose, editValue, update }) => {
               <Form.Label>Vehicle Type</Form.Label>
               <Select
                 value={selectedOption}
-                onChange={handleSelectChange}
+                onChange={(value) => {
+                  setFormData({ ...formData, type: value });
+                }}
                 options={options}
                 isMulti
               />
@@ -162,4 +153,4 @@ const PromptModal = ({ show, handleClose, editValue, update }) => {
   );
 };
 
-export default PromptModal;
+export default AddOrUpdateMake;

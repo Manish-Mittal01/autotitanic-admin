@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { FidgetSpinner } from "react-loader-spinner";
+import { FidgetSpinner, RotatingLines } from "react-loader-spinner";
 
 export default function LoadIndicator({ isOpaque }) {
   const [states, setStates] = useState({});
@@ -22,14 +22,13 @@ export default function LoadIndicator({ isOpaque }) {
 
   return (
     <div className="x-load-indicator-component">
-      <FidgetSpinner
+      <RotatingLines
         visible={true}
         height="80"
         width="80"
         ariaLabel="dna-loading"
         wrapperStyle={{}}
         wrapperClass="dna-wrapper x-load-indicator-image"
-        ballColors={["#fff", "#fff", "#fff"]}
         backgroundColor="var(--main-theme-color)"
       />
 

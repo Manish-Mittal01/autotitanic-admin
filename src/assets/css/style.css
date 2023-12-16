@@ -653,26 +653,6 @@ div.filterWrp .searchForm input {
   cursor: pointer;
 }
 
-.editIcon {
-  position: absolute;
-  bottom: -6px;
-  right: 6px;
-  fill: #ffa800;
-  width: 30px;
-  height: 30px;
-
-  transform: rotate(-19deg);
-}
-
-.editIcon path {
-  stroke: #fff;
-}
-
-.editIcon path:first-child,
-path:nth-child(3) {
-  stroke: #fff;
-  display: none;
-}
 
 .upload input.position-absolute {
   z-index: 9;
@@ -680,6 +660,39 @@ path:nth-child(3) {
   opacity: 0;
 }
 
+.secondaryColor,
 .secondaryColor th {
   background-color: #ebeaea !important;
+}
+
+.primaryBtn {
+  border: none;
+  background: #333333;
+  color: #fff;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+.FileExplorerBtnwrapper {
+  display: inline-block;
+  position: relative
+}
+
+.btnimg {
+  background: red;
+  pointer-events: none;
+  width: 250px;
+  height: 90px;
+  opacity: 1;
+  line-height: 90px;
+  text-align: center;
+}
+
+.FileExplorerBtnwrapper input[type=file] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }

@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
 import { ReactComponent as EditIcon } from "../../../assets/icons/edit.svg";
 import { ReactComponent as DeleteIcon } from "../../../assets/icons/delete.svg";
-import TableData from "./Component/TableData";
 import NonAuthLayout from "../../../Layout/NonAuthLayout";
-import { toast } from "react-toastify";
-import { listTransactions } from "../../../redux/states/transactions/thunks/listTransactions";
 // import PromptModal from "./Component/PromptModal";
-import userImage from "../../../assets/images/user.jpg";
 import { handleApiRequest } from "../../../services/handleApiRequest";
 import { getAllMake } from "../../../redux/states/makeAndModel/thunk";
+import AddModelPopup from "./Component/AddModelPopup";
+import AddOrUpdateMake from "./Component/AddOrUpdateMake";
 
 const MakeAndModel = () => {
   const { allMakeList } = useSelector((state) => state.makeAndModel);
+  const [userAction, setUserAction] = useState(null);
   const [update, setUpdate] = useState(false);
   const [show, setShow] = useState(false);
-
-  const handleShow = () => {
-    setShow(true);
-    setUpdate(false);
-  };
 
   const handleMakeList = async () => {
     await handleApiRequest(getAllMake);
@@ -48,30 +42,23 @@ const MakeAndModel = () => {
                       <div className="d-flex text-dark align-items-center btn justify-content-center rounded-pill gap-10">
                         <p
                           className="m-0 fw-normal text-muted"
-                          onClick={handleShow}
+                          onClick={() => {
+                            setUserAction({ type: "addMake" });
+                          }}
                         >
                           Add Make
                         </p>
                       </div>
                     </div>
                   </div>
-                  {/* <TableData
-                    transactions={transactions}
-                    requestDetails={requestDetails}
-                    setRequestDetails={setRequestDetails}
-                    handleShow={handleShow}
-                    setEditValue={setEditValue}
-                    update={update}
-                    setUpdate={setUpdate}
-                  /> */}
                 </div>
               </Col>
             </Row>
 
-            {allMakeList.data?.items?.map((data, idx) => {
+            {allMakeList.data?.items?.map((make, idx) => {
               return (
                 <>
-                  <table className="table commonTable">
+                  <Table className="table  mt-4">
                     <thead className="border-0">
                       <tr className="secondaryColor">
                         <th className=" border-0 p-3">S.No.</th>
@@ -84,10 +71,10 @@ const MakeAndModel = () => {
                     <tbody>
                       <tr>
                         <td className="p-3 border-0">{idx + 1}</td>
-                        <td className="p-3 border-0">{data?.label}</td>
+                        <td className="p-3 border-0">{make?.label}</td>
                         <td className="p-3 border-0">
                           <img
-                            src={data?.logo}
+                            src={make?.logo}
                             style={{
                               height: "60px",
                               width: "60px",
@@ -95,43 +82,76 @@ const MakeAndModel = () => {
                             }}
                           />
                         </td>
+                        <td className="p-3 border-0">{make?.type}</td>
                         <td className="p-3 border-0">
-                          <EditIcon />
-                          <DeleteIcon />
+                          <EditIcon className="m-1" />
+                          <DeleteIcon className="m-1" />
                         </td>
                       </tr>
                     </tbody>
-                  </table>
-
-                  <table className="table commonTable">
-                    <thead className="border-0">
-                      <tr>
-                        <th className=" border-0 p-3">S.No.</th>
-                        <th className=" border-0 p-3">Label</th>
-                        <th className=" border-0 p-3">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="p-3 border-0">{idx + 1}</td>
-                        <td className="p-3 border-0">{data?.name}</td>
-
-                        <td className="p-3 border-0">
-                          <EditIcon />
-                          <DeleteIcon />
-                        </td>
-                      </tr>
-                      <Button className="m-3" onClick={() => handleShow1(data)}>
-                        Add Modal
-                      </Button>
-                    </tbody>
-                  </table>
+                  </Table>
+                  <div className="mx-5">
+                    <div className="d-flex align-items-center justify-content-between my-2">
+                      <h4>Models</h4>
+                      <button
+                        className="primaryBtn"
+                        onClick={() =>
+                          setUserAction({ type: "addModel", id: make._id })
+                        }
+                      >
+                        Add Model
+                      </button>
+                    </div>
+                    <table className="table  mb-0">
+                      {/* <thead className="border-0">
+                          <tr>
+                            <th className="border-0 p-3">S.No.</th>
+                            <th className="border-0 p-3">Label</th>
+                            <th className="border-0 p-3">Type</th>
+                            <th className="border-0 p-3">Action</th>
+                          </tr>
+                        </thead> */}
+                      <tbody>
+                        {make.models?.map((model, i) => (
+                          <tr className="secondaryColor">
+                            <td className="secondaryColor p-3 border-0">
+                              {i + 1}
+                            </td>
+                            <td className="secondaryColor p-3 border-0">
+                              {model?.label}
+                            </td>
+                            <td className="secondaryColor p-3 border-0">
+                              {model?.type}
+                            </td>
+                            <td className="secondaryColor p-3 border-0">
+                              <EditIcon className="m-1" />
+                              <DeleteIcon className="m-1" />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </>
               );
             })}
           </Container>
         </section>
       </NonAuthLayout>
+      {userAction?.type === "addModel" && (
+        <AddModelPopup
+          userAction={userAction}
+          setUserAction={setUserAction}
+          handleMakeList={handleMakeList}
+        />
+      )}
+      {userAction?.type === "addMake" && (
+        <AddOrUpdateMake
+          userAction={userAction}
+          setUserAction={setUserAction}
+          handleMakeList={handleMakeList}
+        />
+      )}
     </>
   );
 };

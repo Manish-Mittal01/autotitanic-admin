@@ -16,12 +16,12 @@ const UserContest = () => {
                 <div className="Box py-3 pt-lg-4">
                   <div className="filterWrp mb-3 px-lg-5 px-3 d-flex aling-items-center flex-wrap justify-content-between gap-10">
                     <div className="left d-flex align-items-center gap-10 flex-wrap">
-                      <h2 className="m-0 fw-bold">Contest Listing</h2>
+                      <h2 className="m-0 fw-bold">Post Listing</h2>
 
                       <div className="searchForm position-relative icon-with-text">
                         <input
                           type="text"
-                          placeholder="Search by Name"
+                          placeholder="Search"
                           className="form-control rounded-pill"
                         />
                         <span className="icn position-absolute">
@@ -51,10 +51,10 @@ const UserContest = () => {
                       </div>
                     </div>
                   </div>
-                  <TableData
+                  {/* <TableData
                     ContestPop={ContestPop}
                     setContestPop={setContestPop}
-                  />
+                  /> */}
                 </div>
               </Col>
             </Row>

@@ -24,7 +24,7 @@ const CounterCards = () => {
           <div className="CstmCard px-3 py-2 d-flex align-items-center gap-10 justify-content-between h-100">
             <div className="content">
               <p className="m-0 theme-blue">Total Users</p>
-              <h6 className="m-0 theme-blue fw-bold">{dashboard.user}</h6>
+              <h6 className="m-0 theme-blue fw-bold">{dashboard.user || 0}</h6>
             </div>
             <div className="imgWrp">
               <img src="/assets/images/c2.png" alt="" className="img-fluid" />
@@ -35,7 +35,9 @@ const CounterCards = () => {
           <div className="CstmCard px-3 py-2 d-flex align-items-center gap-10 justify-content-between h-100">
             <div className="content">
               <p className="m-0 theme-blue">Total Vehicles Listed</p>
-              <h6 className="m-0 theme-blue fw-bold">{dashboard.donation}</h6>
+              <h6 className="m-0 theme-blue fw-bold">
+                {dashboard.donation || 0}
+              </h6>
             </div>
             <div className="imgWrp">
               <img src={vehicle} alt="" className="img-fluid" />

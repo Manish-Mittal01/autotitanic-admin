@@ -82,7 +82,7 @@ const TableData = ({ ContestPop, setContestPop }) => {
             </tr>
           </thead>
           <tbody>
-            {data &&
+            {/* {data &&
               data.length > 0 &&
               data.map((data, idx) => {
                 return (
@@ -174,7 +174,7 @@ const TableData = ({ ContestPop, setContestPop }) => {
                     </tr>
                   </>
                 );
-              })}
+              })} */}
           </tbody>
         </table>
       </div>

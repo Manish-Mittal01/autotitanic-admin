@@ -7,9 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import LogoImage from "../../../../assets/images/logo.jpg";
 import {
   addBrand,
+  createModel,
   editBrand,
   imageUploadUrl,
 } from "../../../../redux/states/makeAndModel/thunk";
+import { handleApiRequest } from "../../../../services/handleApiRequest";
 
 const options = [
   { value: "cars", label: "Cars" },
@@ -23,64 +25,42 @@ const options = [
   { value: "partAndAccessories", label: "PartAndAccessories" },
 ];
 
-const BrandModal = ({ show1, handleClose1, editValue, update, makeId }) => {
-  const dispatch = useDispatch();
-  const { makeallList, imageUrl } = useSelector((state) => state.makeAndModal);
-
-  const [selectedOption, setSelectedOption] = useState([]);
+const AddModelPopup = ({ userAction, setUserAction, handleMakeList }) => {
   const [formData, setFormData] = useState({
     label: "",
-    makeId: "",
     type: [],
   });
-  console.log(formData, "formData");
-  useEffect(() => {
-    setFormData({
-      label: "",
-      makeId: makeId,
-      type: [],
-    });
-  }, [makeId]);
 
-  // useEffect(() => {
-  //     if (imageUrl?.data?.length > 0 && imageUrl.data[0]?.url) {
-  //         setFormData((prevFormData) => ({
-  //             ...prevFormData,
-  //             logo: imageUrl.data[0].url,
-  //         }));
-  //     }
-  // }, [imageUrl]);
+  const handleClose = () => {
+    setUserAction(null);
+  };
 
   const handleChange = (e) => {
-    if (e.target.name === "photo") {
-      setFormData({ ...formData, photo: e.target.files[0] });
-    } else {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // const handleSubmit = async () => {
-  //   if (!update) {
-  //     const response = await dispatch(addModal(formData)).unwrap();
-  //     if (response.status) {
-  //       dispatch(makeList());
-  //     }
-  //     handleClose1();
-  //   } else if (update) {
-  //     dispatch(editBrand(formData));
-  //     handleClose1();
-  //   }
-  // };
+  const handleAddOrUpdateModel = async () => {
+    const types = [];
 
-  const handleSelectChange = (selectedOptions) => {
-    const selectedValues = selectedOptions.map((option) => option.value);
-    setFormData({ ...formData, type: selectedValues });
-    setSelectedOption(selectedOptions);
+    formData.type.forEach((type) => {
+      types.push(type.value);
+    });
+    const request = {
+      ...formData,
+      type: types,
+      makeId: userAction.id,
+    };
+
+    await handleApiRequest(createModel, request);
+    await handleMakeList();
+    handleClose();
   };
+
+  console.log(formData, "formData");
 
   return (
     <>
-      <Modal show={show1} onHide={handleClose1}>
+      <Modal show={userAction} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal</Modal.Title>
         </Modal.Header>
@@ -99,8 +79,10 @@ const BrandModal = ({ show1, handleClose1, editValue, update, makeId }) => {
             <Form.Group controlId="formtype">
               <Form.Label>Vehicle Type</Form.Label>
               <Select
-                value={selectedOption}
-                onChange={handleSelectChange}
+                value={formData.value}
+                onChange={(value) => {
+                  setFormData({ ...formData, type: value });
+                }}
                 options={options}
                 isMulti
               />
@@ -108,13 +90,10 @@ const BrandModal = ({ show1, handleClose1, editValue, update, makeId }) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose1}>
+          <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button
-            variant="primary"
-            // onClick={handleSubmit}
-          >
+          <Button variant="primary" onClick={handleAddOrUpdateModel}>
             Save Changes
           </Button>
         </Modal.Footer>
@@ -123,4 +102,4 @@ const BrandModal = ({ show1, handleClose1, editValue, update, makeId }) => {
   );
 };
 
-export default BrandModal;
+export default AddModelPopup;

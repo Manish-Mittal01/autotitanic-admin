@@ -50,7 +50,7 @@ const ManageContest = () => {
                           value={request.search_string}
                           onChange={handleInputChange}
                           type="text"
-                          placeholder="Search by Name"
+                          placeholder="Search"
                           className="form-control rounded-pill"
                         />
                         <span className="icn position-absolute">

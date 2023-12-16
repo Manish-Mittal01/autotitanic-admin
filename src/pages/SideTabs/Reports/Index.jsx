@@ -14,21 +14,21 @@ const Reports = () => {
                 <div className="Box py-3 pt-lg-4">
                   <div className="filterWrp mb-3 px-lg-5 px-3 d-flex aling-items-center flex-wrap justify-content-between gap-10">
                     <div className="left d-flex align-items-center gap-10 flex-wrap">
-                      <h2 className="m-0 fw-bold">Reports</h2>
+                      <h2 className="m-0 fw-bold">Vehicles</h2>
                       <div className="">
                         <Form.Select
                           className="form-control rounded-pill"
                           aria-label="Default select example"
                         >
                           <option>Filter By</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
+                          <option value="1">Cars</option>
+                          {/* <option value="2">Bikes</option>
+                          <option value="3">Trucks</option> */}
                         </Form.Select>
                       </div>
                     </div>
                   </div>
-                  <TableData />
+                  {/* <TableData /> */}
                 </div>
               </Col>
             </Row>

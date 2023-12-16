@@ -60,7 +60,7 @@ const MUTableData = ({ requestDetails, setRequestDetails }) => {
               <th className=" border-0 p-3">Email</th>
               <th className=" border-0 p-3">Mobile</th>
               <th className=" border-0 p-3">Registered At</th>
-              <th className=" border-0 p-3">Last Active</th>
+              {/* <th className=" border-0 p-3">Last Active</th> */}
               <th className=" border-0 p-3">Action</th>
             </tr>
           </thead>

@@ -82,3 +82,51 @@ export const deleteMake = createAsyncThunk(
     }
   }
 );
+
+export const createModel = createAsyncThunk(
+  "makeAndModel/createModel",
+  async (details, Thunk) => {
+    try {
+      const response = await axios.post(`addModel`, details);
+      return response?.data;
+    } catch (error) {
+      return Thunk.rejectWithValue(error);
+    }
+  }
+);
+
+export const getModelDetails = createAsyncThunk(
+  "makeAndModel/getDetailsModel",
+  async (id, Thunk) => {
+    try {
+      const response = await axios.get(`modelDetails/${id}`);
+      return response?.data;
+    } catch (error) {
+      return Thunk.rejectWithValue(error);
+    }
+  }
+);
+
+export const updateModelDetails = createAsyncThunk(
+  "makeAndModel/updateModel",
+  async (details, Thunk) => {
+    try {
+      const response = await axios.put(`updateModel/${details.id}`, details);
+      return response?.data;
+    } catch (error) {
+      return Thunk.rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteModel = createAsyncThunk(
+  "makeAndModel/deleteModel",
+  async (id, Thunk) => {
+    try {
+      const response = await axios.delete(`deletemodel/${id}`);
+      return response?.data;
+    } catch (error) {
+      return Thunk.rejectWithValue(error);
+    }
+  }
+);
