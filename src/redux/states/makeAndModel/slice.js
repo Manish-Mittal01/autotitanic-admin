@@ -1,7 +1,8 @@
 import { createSlice, current } from "@reduxjs/toolkit";
-import { getAllMake } from "./thunk";
+import { getAllMake, getMakeDetails } from "./thunk";
 const initialState = {
   allMakeList: {},
+  makeDetails: {},
   imageUrl: [],
 };
 
@@ -16,6 +17,12 @@ const makeSlice = createSlice({
         state.allMakeList = action.payload;
       })
       .addCase(getAllMake.rejected, (state, action) => {});
+    builder
+      .addCase(getMakeDetails.pending, (state, action) => {})
+      .addCase(getMakeDetails.fulfilled, (state, action) => {
+        state.makeDetails = action.payload;
+      })
+      .addCase(getMakeDetails.rejected, (state, action) => {});
   },
 });
 

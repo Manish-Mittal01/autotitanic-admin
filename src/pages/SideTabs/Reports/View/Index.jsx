@@ -49,19 +49,19 @@ const ViewReport = () => {
   return (
     <>
       <NonAuthLayout>
-        <section className="reports py-3 position-relative">
+        <section classNameName="reports py-3 position-relative">
           <Container>
             <Row>
-              <Col lg="12" className="my-2">
-                <div className="Box py-3 pt-lg-4">
-                  <div className="filterWrp mb-3 px-lg-5 px-3 d-flex aling-items-center flex-wrap justify-content-between gap-10">
-                    <div className="left d-flex align-items-center gap-10 flex-wrap">
+              <Col lg="12" classNameName="my-2">
+                <div classNameName="Box py-3 pt-lg-4">
+                  <div classNameName="filterWrp mb-3 px-lg-5 px-3 d-flex aling-items-center flex-wrap justify-content-between gap-10">
+                    <div classNameName="left d-flex align-items-center gap-10 flex-wrap">
                       <Link
-                        class="d-flex btn align-items-center justify-content-center rounded-pill px-lg-4"
+                        className="d-flex btn align-items-center justify-content-center rounded-pill px-lg-4"
                         to="/reports"
                         style={{ minWidth: "unset;" }}
                       >
-                        <span class="icn me-2">
+                        <span className="icn me-2">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="20"
@@ -77,25 +77,29 @@ const ViewReport = () => {
                         </span>
                         Back
                       </Link>
-                      <h2 className="m-0 fw-bold">Report</h2>
+                      <h2 classNameName="m-0 fw-bold">Report</h2>
                     </div>
                   </div>
-                  <div className="px-lg-5 px-3 mt-3">
-                    <div className="py-2 ">
-                      <div className="box2 p-3">
-                        <div className="table-responsive">
-                          <table className="table commonTable">
-                            <thead className="border-0">
+                  <div classNameName="px-lg-5 px-3 mt-3">
+                    <div classNameName="py-2 ">
+                      <div classNameName="box2 p-3">
+                        <div classNameName="table-responsive">
+                          <table classNameName="table commonTable">
+                            <thead classNameName="border-0">
                               <tr>
-                                <th className="border-0 p-2 text-dark">ID</th>
-                                <th className="border-0 p-2 text-dark">User</th>
-                                <th className="border-0 p-2 text-dark">
+                                <th classNameName="border-0 p-2 text-dark">
+                                  ID
+                                </th>
+                                <th classNameName="border-0 p-2 text-dark">
+                                  User
+                                </th>
+                                <th classNameName="border-0 p-2 text-dark">
                                   Status
                                 </th>
-                                <th className="border-0 p-2 text-dark">
+                                <th classNameName="border-0 p-2 text-dark">
                                   User Mobile Number
                                 </th>
-                                <th className="border-0 p-2 text-dark">
+                                <th classNameName="border-0 p-2 text-dark">
                                   Status
                                 </th>
                               </tr>
@@ -103,18 +107,18 @@ const ViewReport = () => {
                             <tbody>
                               {reported_user_details.body && (
                                 <tr>
-                                  <td className="border-0 p-2">
+                                  <td classNameName="border-0 p-2">
                                     {reported_user_details.body._id}
                                   </td>
-                                  <td className="border-0 p-2">
+                                  <td classNameName="border-0 p-2">
                                     {
                                       reported_user_details.body.reported_to
                                         .name
                                     }
                                   </td>
-                                  <td className="border-0 p-2">
+                                  <td classNameName="border-0 p-2">
                                     <span
-                                      className={
+                                      classNameName={
                                         reported_user_details.body.reported_to
                                           .status == "0"
                                           ? "statusLabel rounded-pill px-3 py-1 successLabel"
@@ -129,17 +133,17 @@ const ViewReport = () => {
                                         : "Blocked"}
                                     </span>
                                   </td>
-                                  <td className="border-0 p-2">
+                                  <td classNameName="border-0 p-2">
                                     {
                                       reported_user_details.body.reported_to
                                         .full_phone_number
                                     }
                                   </td>
 
-                                  <td className="border-0 p-2">
+                                  <td classNameName="border-0 p-2">
                                     <Button
                                       onClick={handleUserStatus}
-                                      className="d-flex align-items-center justify-content-center tableButton"
+                                      classNameName="d-flex align-items-center justify-content-center tableButton"
                                     >
                                       {reported_user_details.body.status === 1
                                         ? "Block"
@@ -153,37 +157,37 @@ const ViewReport = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="py-2 ">
-                      <div className="box2 p-3 d-flex align-items-center justify-content-between gap-10">
-                        <div className="cstmContentWrpper">
-                          <h6 className="m-0 py-1">User Email</h6>
-                          <p className="m-0 py-1">
+                    <div classNameName="py-2 ">
+                      <div classNameName="box2 p-3 d-flex align-items-center justify-content-between gap-10">
+                        <div classNameName="cstmContentWrpper">
+                          <h6 classNameName="m-0 py-1">User Email</h6>
+                          <p classNameName="m-0 py-1">
                             {reported_user_details.body?.reported_to.email}
                           </p>
                         </div>
-                        <div className="cstmContentWrpper">
-                          <p className="m-0 py-1">Created at</p>
-                          <p className="m-0 py-1">
+                        <div classNameName="cstmContentWrpper">
+                          <p classNameName="m-0 py-1">Created at</p>
+                          <p classNameName="m-0 py-1">
                             {reported_user_details.body?.date}
                           </p>
                         </div>
                       </div>
                     </div>
-                    <div className="py-2 ">
-                      <div className="box2 p-3">
-                        <div className="cstmContentWrpper">
-                          <h6 className="m-0 py-1">Description</h6>
-                          <p className="m-0 py-1">
+                    <div classNameName="py-2 ">
+                      <div classNameName="box2 p-3">
+                        <div classNameName="cstmContentWrpper">
+                          <h6 classNameName="m-0 py-1">Description</h6>
+                          <p classNameName="m-0 py-1">
                             {reported_user_details.body?.description}
                           </p>
                         </div>
                       </div>
                     </div>
-                    <div className="py-2 ">
-                      <div className="box2 p-3">
-                        <div className="cstmContentWrpper">
-                          <h6 className="m-0 py-1">Reason</h6>
-                          <p className="m-0 py-1">
+                    <div classNameName="py-2 ">
+                      <div classNameName="box2 p-3">
+                        <div classNameName="cstmContentWrpper">
+                          <h6 classNameName="m-0 py-1">Reason</h6>
+                          <p classNameName="m-0 py-1">
                             {reported_user_details.body?.reason}
                           </p>
                         </div>

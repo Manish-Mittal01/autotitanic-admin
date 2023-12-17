@@ -696,3 +696,7 @@ div.filterWrp .searchForm input {
   right: 0;
   bottom: 0;
 }
+
+.delete-pop .icn svg {
+  height: 80px;
+}

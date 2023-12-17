@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
 import { ReactComponent as EditIcon } from "../../../assets/icons/edit.svg";
@@ -6,18 +6,25 @@ import { ReactComponent as DeleteIcon } from "../../../assets/icons/delete.svg";
 import NonAuthLayout from "../../../Layout/NonAuthLayout";
 // import PromptModal from "./Component/PromptModal";
 import { handleApiRequest } from "../../../services/handleApiRequest";
-import { getAllMake } from "../../../redux/states/makeAndModel/thunk";
+import {
+  deleteMake,
+  getAllMake,
+} from "../../../redux/states/makeAndModel/thunk";
 import AddModelPopup from "./Component/AddModelPopup";
 import AddOrUpdateMake from "./Component/AddOrUpdateMake";
+import DeletePopup from "../../../components/Modals/DeletePop";
 
 const MakeAndModel = () => {
   const { allMakeList } = useSelector((state) => state.makeAndModel);
   const [userAction, setUserAction] = useState(null);
-  const [update, setUpdate] = useState(false);
-  const [show, setShow] = useState(false);
 
   const handleMakeList = async () => {
     await handleApiRequest(getAllMake);
+  };
+
+  const handleDeleteMake = async () => {
+    await handleApiRequest(deleteMake, { makeId: userAction.id });
+    await handleMakeList();
   };
 
   useEffect(() => {
@@ -57,7 +64,7 @@ const MakeAndModel = () => {
 
             {allMakeList.data?.items?.map((make, idx) => {
               return (
-                <>
+                <Fragment key={make._id}>
                   <Table className="table  mt-4">
                     <thead className="border-0">
                       <tr className="secondaryColor">
@@ -82,10 +89,22 @@ const MakeAndModel = () => {
                             }}
                           />
                         </td>
-                        <td className="p-3 border-0">{make?.type}</td>
                         <td className="p-3 border-0">
-                          <EditIcon className="m-1" />
-                          <DeleteIcon className="m-1" />
+                          {make?.type?.join(", ")}
+                        </td>
+                        <td className="p-3 border-0">
+                          <EditIcon
+                            className="m-1 pointer"
+                            onClick={() =>
+                              setUserAction({ type: "editMake", id: make._id })
+                            }
+                          />
+                          <DeleteIcon
+                            className="m-1 pointer"
+                            onClick={() =>
+                              setUserAction({ type: "delete", id: make._id })
+                            }
+                          />
                         </td>
                       </tr>
                     </tbody>
@@ -113,7 +132,7 @@ const MakeAndModel = () => {
                         </thead> */}
                       <tbody>
                         {make.models?.map((model, i) => (
-                          <tr className="secondaryColor">
+                          <tr className="secondaryColor" key={model._id}>
                             <td className="secondaryColor p-3 border-0">
                               {i + 1}
                             </td>
@@ -121,7 +140,7 @@ const MakeAndModel = () => {
                               {model?.label}
                             </td>
                             <td className="secondaryColor p-3 border-0">
-                              {model?.type}
+                              {model?.type?.join(", ")}
                             </td>
                             <td className="secondaryColor p-3 border-0">
                               <EditIcon className="m-1" />
@@ -132,7 +151,7 @@ const MakeAndModel = () => {
                       </tbody>
                     </table>
                   </div>
-                </>
+                </Fragment>
               );
             })}
           </Container>
@@ -145,11 +164,19 @@ const MakeAndModel = () => {
           handleMakeList={handleMakeList}
         />
       )}
-      {userAction?.type === "addMake" && (
+      {(userAction?.type === "addMake" || userAction?.type === "editMake") && (
         <AddOrUpdateMake
           userAction={userAction}
           setUserAction={setUserAction}
           handleMakeList={handleMakeList}
+        />
+      )}
+
+      {userAction?.type === "delete" && (
+        <DeletePopup
+          userAction={userAction}
+          setUserAction={setUserAction}
+          onDelete={handleDeleteMake}
         />
       )}
     </>

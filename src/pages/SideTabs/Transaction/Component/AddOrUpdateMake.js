@@ -4,6 +4,13 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
+import { handleApiRequest } from "../../../../services/handleApiRequest";
+import { imageUpload } from "../../../../redux/states/common/thunk";
+import {
+  createMake,
+  getMakeDetails,
+  updateMakeDetails,
+} from "../../../../redux/states/makeAndModel/thunk";
 
 const options = [
   { value: "cars", label: "Cars" },
@@ -17,85 +24,95 @@ const options = [
   { value: "partAndAccessories", label: "PartAndAccessories" },
 ];
 
-const AddOrUpdateMake = ({
-  userAction,
-  setUserAction,
-  handleMakeList,
-  update,
-}) => {
-  const dispatch = useDispatch();
-  const imageUrl = "";
-  const [selectedOption, setSelectedOption] = useState([]);
+const AddOrUpdateMake = ({ userAction, setUserAction, handleMakeList }) => {
+  const { makeDetails } = useSelector((state) => state.makeAndModel);
   const [formData, setFormData] = useState({
     label: "",
-    value: "",
-    photo: null,
     logo: "",
-    makeId: "",
     type: [],
   });
-  console.log(formData, "formData");
 
   const handleClose = () => {
     setUserAction(null);
   };
 
-  useEffect(() => {
-    if (imageUrl?.data?.length > 0 && imageUrl.data[0]?.url) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        logo: imageUrl.data[0].url,
-      }));
-    }
-  }, [imageUrl]);
-
   const handleChange = (e) => {
-    if (e.target.name === "photo") {
-      setFormData({ ...formData, photo: e.target.files[0] });
-    } else {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files[0];
+    const request = {
+      file,
+    };
+    const response = await handleApiRequest(imageUpload, request);
+
+    if (response.status) {
+      setFormData({ ...formData, logo: response.data[0].url });
     }
+  };
+
+  const handleMakeDetails = async () => {
+    await handleApiRequest(getMakeDetails, userAction.id);
   };
 
   const handleSubmit = async () => {
-    if (!update) {
-      try {
-        const response = await dispatch(addBrand(formData)).unwrap();
-        if (response.status) {
-          // dispatch(makeList());
-        }
-        console.log(response, "response");
-      } catch (error) {
-        console.log(error);
-      }
-      formData("");
-      handleClose();
-    } else if (update) {
-      try {
-        const response = await dispatch(editBrand(formData)).unwrap();
-        if (response.status) {
-          // dispatch(makeList());
-        }
-        console.log(response, "response");
-      } catch (error) {
-        console.log(error);
-      }
-      formData("");
+    const types = [];
+    formData.type.forEach((type) => {
+      types.push(type.value);
+    });
+
+    const request = {
+      ...formData,
+      type: types,
+    };
+    let response = {};
+    if (userAction.type === "addMake") {
+      response = await handleApiRequest(createMake, request);
+    } else {
+      response = await handleApiRequest(updateMakeDetails, request);
+    }
+
+    if (response.status) {
+      await handleMakeList();
+      setFormData({});
       handleClose();
     }
   };
 
-  const uploadImage = () => {
-    if (formData?.photo) {
-      dispatch(imageUploadUrl(formData?.photo));
+  useEffect(() => {
+    if (userAction.type === "editMake") {
+      handleMakeDetails();
     }
-  };
+  }, [userAction]);
+
+  useEffect(() => {
+    if (makeDetails.data) {
+      const types = [];
+      makeDetails.data.type.forEach((type) => {
+        types.push({
+          value: type,
+          label: options.find((opt) => opt.value === type)?.label,
+        });
+      });
+      setFormData({
+        ...makeDetails.data,
+        makeId: makeDetails.data._id,
+        type: types,
+      });
+    }
+  }, [makeDetails]);
+
+  // console.log("formData", formData);
+  // console.log("makeDetails", makeDetails);
 
   return (
     <>
       <Modal show={!!userAction} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>{update ? "Update Make" : "Add Make"}</Modal.Title>
+          <Modal.Title>
+            {userAction.type === "editMake" ? "Update Make" : "Add Make"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -111,10 +128,11 @@ const AddOrUpdateMake = ({
             </Form.Group>
 
             <Form.Group controlId="formPhoto">
-              <Form.Label className="my-3">Make Logo</Form.Label>
-              <div class="FileExplorerBtnwrapper">
+              <Form.Label className="my-2">Make Logo</Form.Label>
+              <br />
+              <div className="FileExplorerBtnwrapper">
                 <Button className="pointer">Upload logo</Button>
-                <input type="file" />
+                <input type="file" onChange={handleLogoUpload} />
               </div>
             </Form.Group>
 
@@ -130,7 +148,7 @@ const AddOrUpdateMake = ({
             <Form.Group controlId="formVehicleType">
               <Form.Label>Vehicle Type</Form.Label>
               <Select
-                value={selectedOption}
+                value={formData.type}
                 onChange={(value) => {
                   setFormData({ ...formData, type: value });
                 }}

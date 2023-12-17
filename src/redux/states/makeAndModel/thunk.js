@@ -39,7 +39,7 @@ export const createMake = createAsyncThunk(
   "makeAndModel/create",
   async (details, Thunk) => {
     try {
-      const response = await axios.post(`bots`, details);
+      const response = await axios.post(`addMake`, details);
       return response?.data;
     } catch (error) {
       return Thunk.rejectWithValue(error);
@@ -51,7 +51,7 @@ export const getMakeDetails = createAsyncThunk(
   "makeAndModel/getDetails",
   async (id, Thunk) => {
     try {
-      const response = await axios.get(`bots/${id}`);
+      const response = await axios.get(`makeDetails/${id}`);
       return response?.data;
     } catch (error) {
       return Thunk.rejectWithValue(error);
@@ -63,7 +63,7 @@ export const updateMakeDetails = createAsyncThunk(
   "makeAndModel/update",
   async (details, Thunk) => {
     try {
-      const response = await axios.put(`bots/${details.id}`, details);
+      const response = await axios.post(`updateMake`, details);
       return response?.data;
     } catch (error) {
       return Thunk.rejectWithValue(error);
@@ -75,7 +75,7 @@ export const deleteMake = createAsyncThunk(
   "makeAndModel/delete",
   async (id, Thunk) => {
     try {
-      const response = await axios.delete(`bots/${id}`);
+      const response = await axios.post(`deletemake`, id);
       return response?.data;
     } catch (error) {
       return Thunk.rejectWithValue(error);

@@ -30,7 +30,7 @@ const UserChart = ({ name, data }) => {
       tooltip: {
         enabled: true,
         custom: function ({ series, seriesIndex, dataPointIndex, w }) {
-          return `<div class="p-1 bg-light border text-dark">
+          return `<div className="p-1 bg-light border text-dark">
               <span>${titles[seriesIndex]} : ${parsedData[seriesIndex]}%</span>
             </div>`;
         },
@@ -69,14 +69,14 @@ const UserChart = ({ name, data }) => {
 
   return (
     <>
-      <div className="chart-wrap position-relative">
-        <h6 className="m-0 position-absolute pieTitle">{name}</h6>
+      <div classNameName="chart-wrap position-relative">
+        <h6 classNameName="m-0 position-absolute pieTitle">{name}</h6>
         <div id="chart">
           <ReactApexChart
             options={chartData.options}
             series={chartData.series}
             type="donut"
-            className="w-100"
+            classNameName="w-100"
           />
         </div>
       </div>

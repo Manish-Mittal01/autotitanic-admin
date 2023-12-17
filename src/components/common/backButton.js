@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 
 export default function BackButton({ goBackTo }) {
   return (
-    <div className="left d-flex align-items-center gap-10 flex-wrap">
+    <div classNameName="left d-flex align-items-center gap-10 flex-wrap">
       <Link
-        class="d-flex btn align-items-center justify-content-center rounded-pill px-lg-4"
+        className="d-flex btn align-items-center justify-content-center rounded-pill px-lg-4"
         to={goBackTo}
         style={{ minWidth: "unset;" }}
       >
-        <span class="icn me-2">
+        <span className="icn me-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -25,7 +25,7 @@ export default function BackButton({ goBackTo }) {
         </span>
         Back
       </Link>
-      <h2 className="m-0 fw-bold">Sub Admins</h2>
+      <h2 classNameName="m-0 fw-bold">Sub Admins</h2>
     </div>
   );
 }

@@ -6,8 +6,7 @@ export const imageUpload = createAsyncThunk(
   async (payload, Thunk) => {
     try {
       const formData = new FormData();
-      formData.append("file", payload.file);
-      formData.append("folder", "users");
+      formData.append("images", payload.file);
 
       let newHeaders = {
         "Content-Type": "multipart/form-data",
@@ -21,7 +20,7 @@ export const imageUpload = createAsyncThunk(
       });
 
       let response = (
-        await axiosInstanceWithHeaders.post("/common/upload_image", formData)
+        await axiosInstanceWithHeaders.post("uploadFiles", formData)
       )?.data;
 
       return response;
