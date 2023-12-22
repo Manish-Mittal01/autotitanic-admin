@@ -28,7 +28,7 @@ const options = [
   { value: "partAndAccessories", label: "PartAndAccessories" },
 ];
 
-const AddModelPopup = ({ userAction, setUserAction, handleMakeList }) => {
+const AddModelPopup = ({ userAction, setUserAction, handleModelList }) => {
   const { modelDetails } = useSelector((state) => state.makeAndModel);
   const [formData, setFormData] = useState({
     label: "",
@@ -56,7 +56,7 @@ const AddModelPopup = ({ userAction, setUserAction, handleMakeList }) => {
     const request = {
       ...formData,
       type: types,
-      makeId: userAction.id,
+      make: userAction.id,
     };
     let response = {};
     if (userAction.type === "editModel") {
@@ -69,7 +69,7 @@ const AddModelPopup = ({ userAction, setUserAction, handleMakeList }) => {
       response = await handleApiRequest(createModel, request);
     }
     if (response.status) {
-      await handleMakeList();
+      await handleModelList();
       handleClose();
       setFormData({});
     }

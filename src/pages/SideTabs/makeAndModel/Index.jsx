@@ -1,6 +1,15 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Nav,
+  Row,
+  Tab,
+  Table,
+} from "react-bootstrap";
 import { ReactComponent as EditIcon } from "../../../assets/icons/edit.svg";
 import { ReactComponent as DeleteIcon } from "../../../assets/icons/delete.svg";
 import NonAuthLayout from "../../../Layout/NonAuthLayout";
@@ -10,17 +19,29 @@ import {
   deleteMake,
   deleteModel,
   getAllMake,
+  getAllModel,
 } from "../../../redux/states/makeAndModel/thunk";
 import AddModelPopup from "./Component/AddModelPopup";
 import AddOrUpdateMake from "./Component/AddOrUpdateMake";
 import DeletePopup from "../../../components/Modals/DeletePop";
+import MyPagination from "../../../components/common/myPagination";
 
 const MakeAndModel = () => {
-  const { allMakeList } = useSelector((state) => state.makeAndModel);
+  const { allMakeList, allModelList } = useSelector(
+    (state) => state.makeAndModel
+  );
   const [userAction, setUserAction] = useState(null);
+  const [paginationDetails, setPaginationDetails] = useState({
+    page: 1,
+    limit: 10,
+  });
 
   const handleMakeList = async () => {
-    await handleApiRequest(getAllMake);
+    await handleApiRequest(getAllMake, paginationDetails);
+  };
+
+  const handleModelList = async () => {
+    await handleApiRequest(getAllModel, paginationDetails);
   };
 
   const handleDeleteMake = async () => {
@@ -29,7 +50,7 @@ const MakeAndModel = () => {
   };
   const handleDeleteModel = async () => {
     await handleApiRequest(deleteModel, { modelId: userAction.id });
-    await handleMakeList();
+    await handleModelList();
   };
 
   const handleDelete = () => {
@@ -42,9 +63,11 @@ const MakeAndModel = () => {
 
   useEffect(() => {
     handleMakeList();
-  }, []);
+    handleModelList();
+  }, [paginationDetails]);
 
   console.log("allMakeList", allMakeList);
+  console.log("allModelList", allModelList);
 
   return (
     <>
@@ -54,9 +77,9 @@ const MakeAndModel = () => {
             <Row>
               <Col lg="12" className="my-2">
                 <div className="Box py-3 pt-lg-4">
-                  <div className="filterWrp pb-3 px-lg-5 px-3 d-flex aling-items-center flex-wrap justify-content-between gap-10 border-bottom">
+                  <div className="filterWrp pb-3 px-lg-3 px-3 d-flex aling-items-center flex-wrap justify-content-between gap-10 border-bottom">
                     <div className="left d-flex align-items-center gap-10 flex-wrap">
-                      <h2 className="m-0 fw-bold">Make</h2>
+                      <h2 className="m-0 fw-bold">Make and Model</h2>
                     </div>
                     <div className="right d-flex align-items-center flex-wrap gap-10">
                       <div className="d-flex text-dark align-items-center btn justify-content-center rounded-pill gap-10">
@@ -74,9 +97,28 @@ const MakeAndModel = () => {
                 </div>
               </Col>
             </Row>
-            {allMakeList.data?.items?.map((make, idx) => {
-              return (
-                <Fragment key={make._id}>
+
+            <Tab.Container id="left-tabs-example" defaultActiveKey="make">
+              <Nav variant="tabs" className="underLineTab">
+                <Nav.Item>
+                  <Nav.Link
+                    className="bg-transparent text-dark"
+                    eventKey="make"
+                  >
+                    Make
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    className="bg-transparent text-dark"
+                    eventKey="model"
+                  >
+                    Model
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
+              <Tab.Content className="pt-3">
+                <Tab.Pane eventKey="make">
                   <Table className="table  mt-4">
                     <thead className="border-0">
                       <tr className="secondaryColor">
@@ -88,103 +130,108 @@ const MakeAndModel = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="p-3 border-0">{idx + 1}</td>
-                        <td className="p-3 border-0">{make?.label}</td>
-                        <td className="p-3 border-0">
-                          <img
-                            src={make?.logo}
-                            style={{
-                              height: "60px",
-                              width: "60px",
-                              borderRadius: "50%",
-                            }}
-                          />
-                        </td>
-                        <td className="p-3 border-0">
-                          {make?.type?.join(", ")}
-                        </td>
-                        <td className="p-3 border-0">
-                          <EditIcon
-                            className="m-1 pointer"
-                            onClick={() =>
-                              setUserAction({ type: "editMake", id: make._id })
-                            }
-                          />
-                          <DeleteIcon
-                            className="m-1 pointer"
-                            onClick={() =>
-                              setUserAction({
-                                type: "deleteMake",
-                                id: make._id,
-                              })
-                            }
-                          />
-                        </td>
-                      </tr>
+                      {allMakeList.data?.items?.map((make, idx) => (
+                        <tr>
+                          <td className="p-3 border-0">{idx + 1}</td>
+                          <td className="p-3 border-0">{make?.label}</td>
+                          <td className="p-3 border-0">
+                            <img
+                              src={make?.logo}
+                              style={{
+                                height: "60px",
+                                width: "60px",
+                                borderRadius: "50%",
+                              }}
+                            />
+                          </td>
+                          <td className="p-3 border-0">
+                            {make?.type?.join(", ")}
+                          </td>
+                          <td className="p-3 border-0">
+                            <EditIcon
+                              className="m-1 pointer"
+                              onClick={() =>
+                                setUserAction({
+                                  type: "addModel",
+                                  id: make._id,
+                                })
+                              }
+                            />
+                            <EditIcon
+                              className="m-1 pointer"
+                              onClick={() =>
+                                setUserAction({
+                                  type: "editMake",
+                                  id: make._id,
+                                })
+                              }
+                            />
+                            <DeleteIcon
+                              className="m-1 pointer"
+                              onClick={() =>
+                                setUserAction({
+                                  type: "deleteMake",
+                                  id: make._id,
+                                })
+                              }
+                            />
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </Table>
-                  <div className="mx-5">
-                    <div className="d-flex align-items-center justify-content-between my-2">
-                      <h4>Models</h4>
-                      <button
-                        className="primaryBtn"
-                        onClick={() =>
-                          setUserAction({ type: "addModel", id: make._id })
-                        }
-                      >
-                        Add Model
-                      </button>
-                    </div>
-                    <table className="table  mb-0">
-                      {/* <thead className="border-0">
-                          <tr>
-                            <th className="border-0 p-3">S.No.</th>
-                            <th className="border-0 p-3">Label</th>
-                            <th className="border-0 p-3">Type</th>
-                            <th className="border-0 p-3">Action</th>
-                          </tr>
-                        </thead> */}
-                      <tbody>
-                        {make.models?.map((model, i) => (
-                          <tr className="secondaryColor" key={model._id}>
-                            <td className="secondaryColor p-3 border-0">
-                              {i + 1}
-                            </td>
-                            <td className="secondaryColor p-3 border-0">
-                              {model?.label}
-                            </td>
-                            <td className="secondaryColor p-3 border-0">
-                              {model?.type?.join(", ")}
-                            </td>
-                            <td className="secondaryColor p-3 border-0">
-                              <EditIcon
-                                className="m-1 pointer"
-                                onClick={() =>
-                                  setUserAction({
-                                    type: "editModel",
-                                    id: model._id,
-                                  })
-                                }
-                              />
-                              <DeleteIcon
-                                className="m-1 pointer"
-                                onClick={() =>
-                                  setUserAction({
-                                    type: "deleteModel",
-                                    id: model._id,
-                                  })
-                                }
-                              />
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </Fragment>
-              );
-            })}
+                  <MyPagination
+                    paginationDetails={paginationDetails}
+                    setPaginationDetails={setPaginationDetails}
+                    totalPosts={allMakeList.data?.totalCount}
+                  />
+                </Tab.Pane>
+
+                <Tab.Pane eventKey="model">
+                  <Table className="table  mt-4">
+                    <thead className="border-0">
+                      <tr className="secondaryColor">
+                        <th className=" border-0 p-3">S.No.</th>
+                        <th className=" border-0 p-3">Model</th>
+                        <th className=" border-0 p-3">Make</th>
+                        <th className=" border-0 p-3">Types</th>
+                        <th className=" border-0 p-3">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {allModelList.data?.items?.map((model, idx) => (
+                        <tr key={model._id}>
+                          <td className="p-3">{idx + 1}</td>
+                          <td className="p-3">{model.label}</td>
+                          <td className="p-3">{model.make?.label}</td>
+                          <td className="p-3">{model.type?.join(", ")}</td>
+                          <td className="p-3 border-0">
+                            <EditIcon
+                              className="m-1 pointer"
+                              onClick={() =>
+                                setUserAction({
+                                  type: "editModel",
+                                  id: model._id,
+                                })
+                              }
+                            />
+                            <DeleteIcon
+                              className="m-1 pointer"
+                              onClick={() =>
+                                setUserAction({
+                                  type: "deleteModel",
+                                  id: model._id,
+                                })
+                              }
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Tab.Pane>
+              </Tab.Content>
+            </Tab.Container>
           </Container>
         </section>
       </NonAuthLayout>
@@ -193,7 +240,7 @@ const MakeAndModel = () => {
         <AddModelPopup
           userAction={userAction}
           setUserAction={setUserAction}
-          handleMakeList={handleMakeList}
+          handleModelList={handleModelList}
         />
       )}
       {(userAction?.type === "addMake" || userAction?.type === "editMake") && (

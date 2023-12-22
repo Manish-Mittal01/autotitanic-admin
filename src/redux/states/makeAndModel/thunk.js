@@ -13,21 +13,9 @@ export const getAllMake = createAsyncThunk(
       if (filters?.limit) {
         queryParams.push(`limit=${filters.limit}`);
       }
-      // if (filters?.order) {
-      //   queryParams.push(`order=${filters.order}`);
-      // }
-      // if (filters?.orderBy) {
-      //   queryParams.push(`orderBy=${filters.orderBy}`);
-      // }
-      // if (filters?.serverPaging) {
-      //   queryParams.push(`serverPaging=${filters.serverPaging}`);
-      // }
-      // if (filters?.search) {
-      //   queryParams.push(`search=${filters.search}`);
-      // }
-      const query = queryParams.join("&");
 
-      const response = await axios.get(`allMake/${query ? `?${query}` : ""}`);
+      const query = queryParams.join("&");
+      const response = await axios.get(`makeList/${query ? `?${query}` : ""}`);
       return response?.data;
     } catch (error) {
       return Thunk.rejectWithValue(error);
@@ -76,6 +64,28 @@ export const deleteMake = createAsyncThunk(
   async (id, Thunk) => {
     try {
       const response = await axios.post(`deletemake`, id);
+      return response?.data;
+    } catch (error) {
+      return Thunk.rejectWithValue(error);
+    }
+  }
+);
+
+export const getAllModel = createAsyncThunk(
+  "makeAndModel/getAllModel",
+  async (filters, Thunk) => {
+    try {
+      const queryParams = [];
+
+      if (filters?.page) {
+        queryParams.push(`page=${filters.page}`);
+      }
+      if (filters?.limit) {
+        queryParams.push(`limit=${filters.limit}`);
+      }
+
+      const query = queryParams.join("&");
+      const response = await axios.get(`modelList/${query ? `?${query}` : ""}`);
       return response?.data;
     } catch (error) {
       return Thunk.rejectWithValue(error);

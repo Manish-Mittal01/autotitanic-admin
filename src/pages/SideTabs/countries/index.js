@@ -177,7 +177,7 @@ const CountryAndCity = () => {
                     <thead className="border-0">
                       <tr className="secondaryColor">
                         <th className=" border-0 p-3">S.No.</th>
-                        <th className=" border-0 p-3">Name</th>
+                        <th className=" border-0 p-3">City Name</th>
                         <th className=" border-0 p-3">Country</th>
                         <th className=" border-0 p-3">Action</th>
                       </tr>
@@ -188,8 +188,9 @@ const CountryAndCity = () => {
                           <tr>
                             <td className="p-3 border-0">{idx + 1}</td>
                             <td className="p-3 border-0">{city?.name}</td>
-
-                            <td className="p-3 border-0">{city?.country}</td>
+                            <td className="p-3 border-0">
+                              {city?.country?.name}
+                            </td>
                             <td className="p-3 border-0">
                               <EditIcon
                                 className="m-1 pointer"
