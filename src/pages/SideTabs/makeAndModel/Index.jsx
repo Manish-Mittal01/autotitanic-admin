@@ -8,6 +8,7 @@ import NonAuthLayout from "../../../Layout/NonAuthLayout";
 import { handleApiRequest } from "../../../services/handleApiRequest";
 import {
   deleteMake,
+  deleteModel,
   getAllMake,
 } from "../../../redux/states/makeAndModel/thunk";
 import AddModelPopup from "./Component/AddModelPopup";
@@ -25,6 +26,18 @@ const MakeAndModel = () => {
   const handleDeleteMake = async () => {
     await handleApiRequest(deleteMake, { makeId: userAction.id });
     await handleMakeList();
+  };
+  const handleDeleteModel = async () => {
+    await handleApiRequest(deleteModel, { modelId: userAction.id });
+    await handleMakeList();
+  };
+
+  const handleDelete = () => {
+    if (userAction.type === "deleteMake") {
+      handleDeleteMake();
+    } else {
+      handleDeleteModel();
+    }
   };
 
   useEffect(() => {
@@ -61,7 +74,6 @@ const MakeAndModel = () => {
                 </div>
               </Col>
             </Row>
-
             {allMakeList.data?.items?.map((make, idx) => {
               return (
                 <Fragment key={make._id}>
@@ -102,7 +114,10 @@ const MakeAndModel = () => {
                           <DeleteIcon
                             className="m-1 pointer"
                             onClick={() =>
-                              setUserAction({ type: "delete", id: make._id })
+                              setUserAction({
+                                type: "deleteMake",
+                                id: make._id,
+                              })
                             }
                           />
                         </td>
@@ -143,8 +158,24 @@ const MakeAndModel = () => {
                               {model?.type?.join(", ")}
                             </td>
                             <td className="secondaryColor p-3 border-0">
-                              <EditIcon className="m-1" />
-                              <DeleteIcon className="m-1" />
+                              <EditIcon
+                                className="m-1 pointer"
+                                onClick={() =>
+                                  setUserAction({
+                                    type: "editModel",
+                                    id: model._id,
+                                  })
+                                }
+                              />
+                              <DeleteIcon
+                                className="m-1 pointer"
+                                onClick={() =>
+                                  setUserAction({
+                                    type: "deleteModel",
+                                    id: model._id,
+                                  })
+                                }
+                              />
                             </td>
                           </tr>
                         ))}
@@ -157,7 +188,8 @@ const MakeAndModel = () => {
           </Container>
         </section>
       </NonAuthLayout>
-      {userAction?.type === "addModel" && (
+      {(userAction?.type === "addModel" ||
+        userAction?.type === "editModel") && (
         <AddModelPopup
           userAction={userAction}
           setUserAction={setUserAction}
@@ -172,11 +204,12 @@ const MakeAndModel = () => {
         />
       )}
 
-      {userAction?.type === "delete" && (
+      {(userAction?.type === "deleteMake" ||
+        userAction?.type === "deleteModel") && (
         <DeletePopup
           userAction={userAction}
           setUserAction={setUserAction}
-          onDelete={handleDeleteMake}
+          onDelete={handleDelete}
         />
       )}
     </>

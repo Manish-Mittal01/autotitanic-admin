@@ -5,8 +5,9 @@ import AddManageUser from "./SideTabs/ManageUsers/Add/Index";
 import ManageUsers from "./SideTabs/ManageUsers/Index";
 import Reports from "./SideTabs/Reports/Index";
 import ViewReport from "./SideTabs/Reports/View/Index";
-import MakeAndModel from "./SideTabs/Transaction/Index";
 import UserContest from "./SideTabs/UserContest/Index";
+import CountryAndCity from "./SideTabs/countries";
+import MakeAndModel from "./SideTabs/makeAndModel/Index";
 
 const privateRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -20,6 +21,7 @@ const privateRoutes = [
   { path: "/reports", component: <Reports /> },
   { path: "/reports/view/:id", component: <ViewReport /> },
   { path: "/make", component: <MakeAndModel /> },
+  { path: "/country", component: <CountryAndCity /> },
 ];
 
 export default privateRoutes;

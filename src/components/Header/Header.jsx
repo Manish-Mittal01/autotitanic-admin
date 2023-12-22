@@ -12,6 +12,7 @@ import { editProfile } from "../../redux/states/auth/thunks/profile/editProfile"
 import { getProfile } from "../../redux/states/auth/thunks/profile/getProfile";
 
 const Header = ({ sidebar, setSidebar }) => {
+  const time = new Date().getHours();
   const { admin } = useSelector((s) => s.auth) ?? {};
   const dispatch = useDispatch();
   const logoutModal = useRef();
@@ -52,12 +53,13 @@ const Header = ({ sidebar, setSidebar }) => {
     }
   };
 
-  console.log("admin", admin);
-  console.log("admin.image", admin?.image);
+  // console.log("admin", admin);
+  // console.log("admin.image", admin?.image);
+  console.log("time", time);
 
   return (
     <>
-      <header className="header  pt-lg-4 pt-2" style={{ zIndex: "99" }}>
+      <header className="header pt-lg-4 pt-2" style={{ zIndex: "99" }}>
         <Navbar expand="lg" className="p-0">
           <Container fluid className="gap-10">
             <div className="left d-flex align-items-center">
@@ -82,7 +84,12 @@ const Header = ({ sidebar, setSidebar }) => {
               <ul className="list-unstyled welcome ps-0 mb-0 d-lg-flex align-items-center gap-10 d-none">
                 <li className="px-1">
                   <h4 className="m-0">
-                    Good morning, {admin?.name}
+                    {time < 12
+                      ? "Good Morning"
+                      : time > 12 && time < 18
+                      ? "Good Afternoon"
+                      : "Good Evening"}{" "}
+                    {admin?.name}
                     <span className="icn">
                       <img
                         src="/assets/images/hello.svg"

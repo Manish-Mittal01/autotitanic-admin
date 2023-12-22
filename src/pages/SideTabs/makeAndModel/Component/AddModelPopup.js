@@ -4,13 +4,17 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
-import { handleApiRequest } from "../../../../services/handleApiRequest";
-import { imageUpload } from "../../../../redux/states/common/thunk";
+import LogoImage from "../../../../assets/images/logo.jpg";
 import {
-  createMake,
-  getMakeDetails,
-  updateMakeDetails,
+  addBrand,
+  createModel,
+  editBrand,
+  getModelDetails,
+  imageUploadUrl,
+  updateModelDetails,
 } from "../../../../redux/states/makeAndModel/thunk";
+import { handleApiRequest } from "../../../../services/handleApiRequest";
+import { vehicleTypes } from "../../../../utils";
 
 const options = [
   { value: "cars", label: "Cars" },
@@ -24,11 +28,10 @@ const options = [
   { value: "partAndAccessories", label: "PartAndAccessories" },
 ];
 
-const AddOrUpdateMake = ({ userAction, setUserAction, handleMakeList }) => {
-  const { makeDetails } = useSelector((state) => state.makeAndModel);
+const AddModelPopup = ({ userAction, setUserAction, handleMakeList }) => {
+  const { modelDetails } = useSelector((state) => state.makeAndModel);
   const [formData, setFormData] = useState({
     label: "",
-    logo: "",
     type: [],
   });
 
@@ -40,79 +43,68 @@ const AddOrUpdateMake = ({ userAction, setUserAction, handleMakeList }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleLogoUpload = async (e) => {
-    const file = e.target.files[0];
-    const request = {
-      file,
-    };
-    const response = await handleApiRequest(imageUpload, request);
-
-    if (response.status) {
-      setFormData({ ...formData, logo: response.data[0].url });
-    }
+  const handleModelDetails = async () => {
+    await handleApiRequest(getModelDetails, userAction.id);
   };
 
-  const handleMakeDetails = async () => {
-    await handleApiRequest(getMakeDetails, userAction.id);
-  };
-
-  const handleSubmit = async () => {
+  const handleAddOrUpdateModel = async () => {
     const types = [];
+
     formData.type.forEach((type) => {
       types.push(type.value);
     });
-
     const request = {
       ...formData,
       type: types,
+      makeId: userAction.id,
     };
     let response = {};
-    if (userAction.type === "addMake") {
-      response = await handleApiRequest(createMake, request);
+    if (userAction.type === "editModel") {
+      response = await handleApiRequest(updateModelDetails, {
+        ...formData,
+        type: types,
+        id: formData._id,
+      });
     } else {
-      response = await handleApiRequest(updateMakeDetails, request);
+      response = await handleApiRequest(createModel, request);
     }
-
     if (response.status) {
       await handleMakeList();
-      setFormData({});
       handleClose();
+      setFormData({});
     }
   };
 
   useEffect(() => {
-    if (userAction.type === "editMake") {
-      handleMakeDetails();
+    if (userAction.type === "editModel") {
+      handleModelDetails();
     }
-  }, [userAction]);
+  }, []);
 
   useEffect(() => {
-    if (makeDetails.data) {
+    if (modelDetails.data) {
       const types = [];
-      makeDetails.data.type.forEach((type) => {
+      modelDetails.data.type.forEach((type) => {
         types.push({
           value: type,
-          label: options.find((opt) => opt.value === type)?.label,
+          label: vehicleTypes.find((opt) => opt.value === type)?.label,
         });
       });
       setFormData({
-        ...makeDetails.data,
-        makeId: makeDetails.data._id,
+        ...modelDetails.data,
         type: types,
       });
     }
-  }, [makeDetails]);
+  }, [modelDetails]);
 
-  // console.log("formData", formData);
-  // console.log("makeDetails", makeDetails);
+  console.log(formData, "formData");
+  console.log("modelDetails", modelDetails);
 
   return (
     <>
-      <Modal show={!!userAction} onHide={handleClose}>
+      <Modal show={userAction} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>
-            {userAction.type === "editMake" ? "Update Make" : "Add Make"}
-          </Modal.Title>
+          <Modal.Title>Modal</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -126,26 +118,7 @@ const AddOrUpdateMake = ({ userAction, setUserAction, handleMakeList }) => {
                 onChange={handleChange}
               />
             </Form.Group>
-
-            <Form.Group controlId="formPhoto">
-              <Form.Label className="my-2">Make Logo</Form.Label>
-              <br />
-              <div className="FileExplorerBtnwrapper">
-                <Button className="pointer">Upload logo</Button>
-                <input type="file" onChange={handleLogoUpload} />
-              </div>
-            </Form.Group>
-
-            <Form.Group controlId="formLogo">
-              {formData?.logo && (
-                <img
-                  src={formData?.logo}
-                  style={{ height: "100px", width: "100px" }}
-                />
-              )}
-            </Form.Group>
-
-            <Form.Group controlId="formVehicleType">
+            <Form.Group controlId="formtype">
               <Form.Label>Vehicle Type</Form.Label>
               <Select
                 value={formData.type}
@@ -162,8 +135,8 @@ const AddOrUpdateMake = ({ userAction, setUserAction, handleMakeList }) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            Save Changes
+          <Button variant="primary" onClick={handleAddOrUpdateModel}>
+            Save
           </Button>
         </Modal.Footer>
       </Modal>
@@ -171,4 +144,4 @@ const AddOrUpdateMake = ({ userAction, setUserAction, handleMakeList }) => {
   );
 };
 
-export default AddOrUpdateMake;
+export default AddModelPopup;

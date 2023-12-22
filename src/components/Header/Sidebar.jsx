@@ -107,6 +107,28 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                   Make & Model
                 </NavLink>
               </li>
+              <li className="py-1">
+                <NavLink
+                  to="/country"
+                  className="d-flex text-white align-items-center gap-10 p-2 rounded-pill"
+                >
+                  <span className="icn stroke me-2">
+                    <CoinIcon />
+                  </span>
+                  Country & City
+                </NavLink>
+              </li>
+              {/* <li className="py-1">
+                <NavLink
+                  to="/content"
+                  className="d-flex text-white align-items-center gap-10 p-2 rounded-pill"
+                >
+                  <span className="icn stroke me-2">
+                    <CoinIcon />
+                  </span>
+                  Content Pages
+                </NavLink>
+              </li> */}
               {/* <li className="py-1">
                 <NavLink
                   to="/settings"

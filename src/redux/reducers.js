@@ -10,6 +10,7 @@ import subAdminReducer from "./states/sub_admin/reducer";
 import settingReducer from "./states/settings/slice";
 import commonSlice from "./states/common/slice";
 import makeSlice from "./states/makeAndModel/slice";
+import countrySlice from "./states/country/slice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   settings: settingReducer,
   common: commonSlice,
   makeAndModel: makeSlice,
+  countryAndCity: countrySlice,
 });
 
 export default rootReducer;
