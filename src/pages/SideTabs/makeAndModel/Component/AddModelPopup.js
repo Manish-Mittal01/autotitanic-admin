@@ -2,33 +2,20 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Select from "react-select";
-import { useDispatch, useSelector } from "react-redux";
-import LogoImage from "../../../../assets/images/logo.jpg";
+import { useSelector } from "react-redux";
 import {
-  addBrand,
   createModel,
-  editBrand,
   getModelDetails,
-  imageUploadUrl,
   updateModelDetails,
 } from "../../../../redux/states/makeAndModel/thunk";
 import { handleApiRequest } from "../../../../services/handleApiRequest";
 import { vehicleTypes } from "../../../../utils";
-
-const options = [
-  { value: "cars", label: "Cars" },
-  { value: "bikes", label: "Bikes" },
-  { value: "vans", label: "Vans" },
-  { value: "motorhomes", label: "Motorhomes" },
-  { value: "carvana", label: "Carvana" },
-  { value: "trucks", label: "Trucks" },
-  { value: "farm", label: "Farm" },
-  { value: "plant", label: "Plant" },
-  { value: "partAndAccessories", label: "PartAndAccessories" },
-];
+import { useSearchParams } from "react-router-dom";
+import blockSubmitRefresh from "../../../../utils/blockSubmitRefresh";
 
 const AddModelPopup = ({ userAction, setUserAction, handleModelList }) => {
+  const [queryParam] = useSearchParams();
+
   const { modelDetails } = useSelector((state) => state.makeAndModel);
   const [formData, setFormData] = useState({
     label: "",
@@ -48,14 +35,9 @@ const AddModelPopup = ({ userAction, setUserAction, handleModelList }) => {
   };
 
   const handleAddOrUpdateModel = async () => {
-    const types = [];
-
-    formData.type.forEach((type) => {
-      types.push(type.value);
-    });
     const request = {
       ...formData,
-      type: types,
+      type: queryParam.get("category") || "cars",
       make: userAction.id,
     };
     let response = {};
@@ -107,18 +89,18 @@ const AddModelPopup = ({ userAction, setUserAction, handleModelList }) => {
           <Modal.Title>Modal</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={blockSubmitRefresh}>
             <Form.Group controlId="formName">
-              <Form.Label>Label</Form.Label>
+              <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter label"
+                placeholder="Enter Model name"
                 name="label"
                 value={formData.label}
                 onChange={handleChange}
               />
             </Form.Group>
-            <Form.Group controlId="formtype">
+            {/* <Form.Group controlId="formtype">
               <Form.Label>Vehicle Type</Form.Label>
               <Select
                 value={formData.type}
@@ -128,7 +110,7 @@ const AddModelPopup = ({ userAction, setUserAction, handleModelList }) => {
                 options={options}
                 isMulti
               />
-            </Form.Group>
+            </Form.Group> */}
           </Form>
         </Modal.Body>
         <Modal.Footer>

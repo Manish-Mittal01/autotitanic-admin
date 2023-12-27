@@ -91,11 +91,6 @@ const TableData = () => {
           </tbody>
         </table>
       </div>
-      <MyPagination
-        requestDetails={requestDetails}
-        setRequestDetails={setRequestDetails}
-        totalPosts={reported_user.total_count}
-      />
     </>
   );
 };

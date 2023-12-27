@@ -68,7 +68,7 @@ export default function MyPagination({
   // console.log("totalPages", totalPages);
   // console.log("pages", pages);
   // console.log("currentPagePost", currentPagePost);
-  // console.log("paginationDetails", paginationDetails);
+  console.log("paginationDetails", paginationDetails);
 
   return (
     <div className="px-3 d-flex align-items-center justify-content-between cstmPagination flex-wrap mt-3 gap-10">

@@ -5,20 +5,7 @@ export const getAllCountry = createAsyncThunk(
   "countryAndCity/getAllCountry",
   async (filters, Thunk) => {
     try {
-      const queryParams = [];
-
-      if (filters?.page) {
-        queryParams.push(`page=${filters.page}`);
-      }
-      if (filters?.limit) {
-        queryParams.push(`limit=${filters.limit}`);
-      }
-
-      const query = queryParams.join("&");
-
-      const response = await axios.get(
-        `allCountry/${query ? `?${query}` : ""}`
-      );
+      const response = await axios.post(`countryList`, filters);
       return response?.data;
     } catch (error) {
       return Thunk.rejectWithValue(error);
@@ -78,18 +65,7 @@ export const getAllCity = createAsyncThunk(
   "countryAndCity/getAllCity",
   async (filters, Thunk) => {
     try {
-      const queryParams = [];
-
-      if (filters?.page) {
-        queryParams.push(`page=${filters.page}`);
-      }
-      if (filters?.limit) {
-        queryParams.push(`limit=${filters.limit}`);
-      }
-
-      const query = queryParams.join("&");
-
-      const response = await axios.get(`allCity/${query ? `?${query}` : ""}`);
+      const response = await axios.post(`cityList`, filters);
       return response?.data;
     } catch (error) {
       return Thunk.rejectWithValue(error);

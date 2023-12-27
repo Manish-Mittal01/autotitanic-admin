@@ -5,17 +5,7 @@ export const getAllMake = createAsyncThunk(
   "makeAndModel/getAll",
   async (filters, Thunk) => {
     try {
-      const queryParams = [];
-
-      if (filters?.page) {
-        queryParams.push(`page=${filters.page}`);
-      }
-      if (filters?.limit) {
-        queryParams.push(`limit=${filters.limit}`);
-      }
-
-      const query = queryParams.join("&");
-      const response = await axios.get(`makeList/${query ? `?${query}` : ""}`);
+      const response = await axios.post(`makeList`, filters);
       return response?.data;
     } catch (error) {
       return Thunk.rejectWithValue(error);
@@ -75,17 +65,7 @@ export const getAllModel = createAsyncThunk(
   "makeAndModel/getAllModel",
   async (filters, Thunk) => {
     try {
-      const queryParams = [];
-
-      if (filters?.page) {
-        queryParams.push(`page=${filters.page}`);
-      }
-      if (filters?.limit) {
-        queryParams.push(`limit=${filters.limit}`);
-      }
-
-      const query = queryParams.join("&");
-      const response = await axios.get(`modelList/${query ? `?${query}` : ""}`);
+      const response = await axios.post(`modelList`, filters);
       return response?.data;
     } catch (error) {
       return Thunk.rejectWithValue(error);

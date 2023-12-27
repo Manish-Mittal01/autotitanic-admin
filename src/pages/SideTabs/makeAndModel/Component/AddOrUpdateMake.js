@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Select from "react-select";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { handleApiRequest } from "../../../../services/handleApiRequest";
 import { imageUpload } from "../../../../redux/states/common/thunk";
 import {
@@ -12,14 +11,14 @@ import {
   updateMakeDetails,
 } from "../../../../redux/states/makeAndModel/thunk";
 import { vehicleTypes } from "../../../../utils";
+import { useSearchParams } from "react-router-dom";
+import blockSubmitRefresh from "../../../../utils/blockSubmitRefresh";
 
 const AddOrUpdateMake = ({ userAction, setUserAction, handleMakeList }) => {
+  const [queryParam] = useSearchParams();
+
   const { makeDetails } = useSelector((state) => state.makeAndModel);
-  const [formData, setFormData] = useState({
-    label: "",
-    logo: "",
-    type: [],
-  });
+  const [formData, setFormData] = useState({});
 
   const handleClose = () => {
     setUserAction(null);
@@ -46,14 +45,9 @@ const AddOrUpdateMake = ({ userAction, setUserAction, handleMakeList }) => {
   };
 
   const handleSubmit = async () => {
-    const types = [];
-    formData.type.forEach((type) => {
-      types.push(type.value);
-    });
-
     const request = {
       ...formData,
-      type: types,
+      type: queryParam.get("category") || "cars",
     };
     let response = {};
     if (userAction.type === "addMake") {
@@ -104,12 +98,12 @@ const AddOrUpdateMake = ({ userAction, setUserAction, handleMakeList }) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={blockSubmitRefresh}>
             <Form.Group controlId="formName">
-              <Form.Label>Label</Form.Label>
+              <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter label"
+                placeholder="Enter Make name"
                 name="label"
                 value={formData.label}
                 onChange={handleChange}
@@ -134,7 +128,7 @@ const AddOrUpdateMake = ({ userAction, setUserAction, handleMakeList }) => {
               )}
             </Form.Group>
 
-            <Form.Group controlId="formVehicleType">
+            {/* <Form.Group controlId="formVehicleType">
               <Form.Label>Vehicle Type</Form.Label>
               <Select
                 value={formData.type}
@@ -144,7 +138,7 @@ const AddOrUpdateMake = ({ userAction, setUserAction, handleMakeList }) => {
                 options={vehicleTypes}
                 isMulti
               />
-            </Form.Group>
+            </Form.Group> */}
           </Form>
         </Modal.Body>
         <Modal.Footer>

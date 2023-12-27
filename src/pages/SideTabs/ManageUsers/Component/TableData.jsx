@@ -235,11 +235,6 @@ const MUTableData = ({ requestDetails, setRequestDetails }) => {
         </table>
       </div>
 
-      <MyPagination
-        requestDetails={requestDetails}
-        setRequestDetails={setRequestDetails}
-        totalPosts={manage_user?.total_count}
-      />
       <UserProfileView
         data={viewData}
         toggle={() => setViewData((prev) => !prev)}
