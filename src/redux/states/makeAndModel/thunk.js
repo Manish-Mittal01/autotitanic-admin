@@ -120,3 +120,63 @@ export const deleteModel = createAsyncThunk(
     }
   }
 );
+
+export const getAllVariant = createAsyncThunk(
+  "makeAndModel/getAllVariant",
+  async (filters, Thunk) => {
+    try {
+      const response = await axios.post(`VariantList`, filters);
+      return response?.data;
+    } catch (error) {
+      return Thunk.rejectWithValue(error);
+    }
+  }
+);
+
+export const createVariant = createAsyncThunk(
+  "makeAndModel/createVariant",
+  async (details, Thunk) => {
+    try {
+      const response = await axios.post(`addVariant`, details);
+      return response?.data;
+    } catch (error) {
+      return Thunk.rejectWithValue(error);
+    }
+  }
+);
+
+export const getVariantDetails = createAsyncThunk(
+  "makeAndModel/getVariantDetails",
+  async (id, Thunk) => {
+    try {
+      const response = await axios.get(`VariantDetails/${id}`);
+      return response?.data;
+    } catch (error) {
+      return Thunk.rejectWithValue(error);
+    }
+  }
+);
+
+export const updateVariantDetails = createAsyncThunk(
+  "makeAndModel/updateVariantDetails",
+  async (details, Thunk) => {
+    try {
+      const response = await axios.post(`updateVariant`, details);
+      return response?.data;
+    } catch (error) {
+      return Thunk.rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteVariant = createAsyncThunk(
+  "makeAndModel/deleteVariant",
+  async (id, Thunk) => {
+    try {
+      const response = await axios.post(`deleteVariant`, id);
+      return response?.data;
+    } catch (error) {
+      return Thunk.rejectWithValue(error);
+    }
+  }
+);

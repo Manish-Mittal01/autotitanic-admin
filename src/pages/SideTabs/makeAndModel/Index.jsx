@@ -19,8 +19,10 @@ import { handleApiRequest } from "../../../services/handleApiRequest";
 import {
   deleteMake,
   deleteModel,
+  deleteVariant,
   getAllMake,
   getAllModel,
+  getAllVariant,
 } from "../../../redux/states/makeAndModel/thunk";
 import AddModelPopup from "./Component/AddModelPopup";
 import AddOrUpdateMake from "./Component/AddOrUpdateMake";
@@ -38,7 +40,7 @@ import {
 
 const MakeAndModel = () => {
   const navigate = useNavigate();
-  const { allMakeList, allModelList } = useSelector(
+  const { allMakeList, allModelList, allVariantList } = useSelector(
     (state) => state.makeAndModel
   );
   const [userAction, setUserAction] = useState(null);
@@ -66,6 +68,14 @@ const MakeAndModel = () => {
     await handleApiRequest(getAllModel, request);
   };
 
+  const handleVariantList = async (searchQuery) => {
+    const request = {
+      ...paginationDetails,
+      search: searchQuery,
+    };
+    await handleApiRequest(getAllVariant, request);
+  };
+
   const handleDeleteMake = async () => {
     await handleApiRequest(deleteMake, { makeId: userAction.id });
     await handleMakeList();
@@ -74,12 +84,18 @@ const MakeAndModel = () => {
     await handleApiRequest(deleteModel, { modelId: userAction.id });
     await handleModelList();
   };
+  const handleDeleteVariant = async () => {
+    await handleApiRequest(deleteVariant, { id: userAction.id });
+    await handleVariantList();
+  };
 
   const handleDelete = () => {
     if (userAction.type === "deleteMake") {
       handleDeleteMake();
-    } else {
+    } else if (userAction.type === "deleteModel") {
       handleDeleteModel();
+    } else if (userAction?.type === "deleteVariant") {
+      handleDeleteVariant();
     }
   };
 
@@ -90,6 +106,8 @@ const MakeAndModel = () => {
         handleMakeList(search);
       } else if (activeTab === 2) {
         handleModelList(search);
+      } else if (activeTab === 3) {
+        handleVariantList(search);
       }
     },
     [1000]
@@ -100,6 +118,8 @@ const MakeAndModel = () => {
       handleMakeList();
     } else if (activeTab === 2) {
       handleModelList();
+    } else if (activeTab === 3) {
+      handleVariantList();
     }
   }, [paginationDetails, activeTab]);
 
@@ -146,7 +166,9 @@ const MakeAndModel = () => {
                           placeholder={
                             activeTab === 1
                               ? "Search by Make"
-                              : "Search by Model"
+                              : activeTab === 2
+                              ? "Search by Model"
+                              : "Search by Variant"
                           }
                           className="form-control rounded-pill"
                           onChange={debounceSearch}
@@ -195,7 +217,7 @@ const MakeAndModel = () => {
                     Model
                   </Nav.Link>
                 </Nav.Item>
-                {/* <Nav.Item>
+                <Nav.Item>
                   <Nav.Link
                     className="bg-transparent text-dark"
                     eventKey="variant"
@@ -203,7 +225,7 @@ const MakeAndModel = () => {
                   >
                     Variant
                   </Nav.Link>
-                </Nav.Item> */}
+                </Nav.Item>
               </Nav>
               <Tab.Content className="pt-3">
                 <Tab.Pane eventKey="make">
@@ -335,40 +357,38 @@ const MakeAndModel = () => {
                   />
                 </Tab.Pane>
 
-                {/* <Tab.Pane eventKey="variant">
+                <Tab.Pane eventKey="variant">
                   <Table className="table  mt-4">
                     <thead className="border-0">
                       <tr className="secondaryColor">
                         <th className=" border-0 p-3">S.No.</th>
+                        <th className=" border-0 p-3">Variant</th>
                         <th className=" border-0 p-3">Model</th>
-                        <th className=" border-0 p-3">Make</th>
-                        <th className=" border-0 p-3">Types</th>
                         <th className=" border-0 p-3">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {allModelList.data?.items?.map((model, idx) => (
-                        <tr key={model._id}>
+                      {allVariantList.data?.items?.map((variant, idx) => (
+                        <tr key={variant._id}>
                           <td className="p-3">{idx + 1}</td>
-                          <td className="p-3">{model.label}</td>
-                          <td className="p-3">{model.make?.label}</td>
-                          <td className="p-3">{model.type?.join(", ")}</td>
+                          <td className="p-3">{variant.label}</td>
+                          <td className="p-3">{variant.model?.label}</td>
                           <td className="p-3 border-0">
                             <EditButton
-                              tooltipText={`Edit model`}
+                              tooltipText={`Edit Variant`}
                               onClick={() =>
                                 setUserAction({
-                                  type: "editModel",
-                                  id: model._id,
+                                  type: "editVariant",
+                                  id: variant._id,
                                 })
                               }
                             />
                             <DeleteButton
-                              tooltipText={"Delete Model"}
+                              tooltipText={"Delete Variant"}
                               onClick={() =>
                                 setUserAction({
-                                  type: "deleteModel",
-                                  id: model._id,
+                                  type: "deleteVariant",
+                                  id: variant._id,
                                 })
                               }
                             />
@@ -380,9 +400,9 @@ const MakeAndModel = () => {
                   <MyPagination
                     paginationDetails={paginationDetails}
                     setPaginationDetails={setPaginationDetails}
-                    totalPosts={allModelList.data?.totalCount}
+                    totalPosts={allVariantList.data?.totalCount}
                   />
-                </Tab.Pane> */}
+                </Tab.Pane>
               </Tab.Content>
             </Tab.Container>
           </Container>

@@ -2,8 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllMake,
   getAllModel,
+  getAllVariant,
   getMakeDetails,
   getModelDetails,
+  getVariantDetails,
 } from "./thunk";
 
 const initialState = {
@@ -11,6 +13,8 @@ const initialState = {
   makeDetails: {},
   modelDetails: {},
   allModelList: {},
+  allVariantList: {},
+  variantDetails: {},
   imageUrl: [],
 };
 
@@ -43,6 +47,18 @@ const makeSlice = createSlice({
         state.modelDetails = action.payload;
       })
       .addCase(getModelDetails.rejected, (state, action) => {});
+    builder
+      .addCase(getAllVariant.pending, (state, action) => {})
+      .addCase(getAllVariant.fulfilled, (state, action) => {
+        state.allVariantList = action.payload;
+      })
+      .addCase(getAllVariant.rejected, (state, action) => {});
+    builder
+      .addCase(getVariantDetails.pending, (state, action) => {})
+      .addCase(getVariantDetails.fulfilled, (state, action) => {
+        state.variantDetails = action.payload;
+      })
+      .addCase(getVariantDetails.rejected, (state, action) => {});
   },
 });
 
