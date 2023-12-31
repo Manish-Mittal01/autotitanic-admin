@@ -15,7 +15,7 @@ import { ReactComponent as SaveIcon } from "../../../assets/icons/save.svg";
 import { ReactComponent as SearchIcon } from "../../../assets/icons/search.svg";
 import NonAuthLayout from "../../../Layout/NonAuthLayout";
 import { handleApiRequest } from "../../../services/handleApiRequest";
-import AddOrUpdateMake from "./Component/AddOrUpdateMake";
+import AddOrUpdateCountry from "./Component/AddOrUpdateCountry";
 import DeletePopup from "../../../components/Modals/DeletePop";
 import {
   deleteCity,
@@ -264,8 +264,8 @@ const CountryAndCity = () => {
                     <thead className="border-0">
                       <tr className="secondaryColor">
                         <th className=" border-0 p-3">S.No.</th>
-                        <th className=" border-0 p-3">City Name</th>
                         <th className=" border-0 p-3">Country</th>
+                        <th className=" border-0 p-3">City Name</th>
                         <th className=" border-0 p-3">Action</th>
                       </tr>
                     </thead>
@@ -274,10 +274,10 @@ const CountryAndCity = () => {
                         return (
                           <tr>
                             <td className="p-3 border-0">{idx + 1}</td>
-                            <td className="p-3 border-0">{city?.name}</td>
                             <td className="p-3 border-0">
                               {city?.country?.name}
                             </td>
+                            <td className="p-3 border-0">{city?.name}</td>
                             <td className="p-3 border-0">
                               <EditIcon
                                 className="m-1 pointer"
@@ -325,7 +325,7 @@ const CountryAndCity = () => {
 
       {(userAction?.type === "addCountry" ||
         userAction?.type === "editCountry") && (
-        <AddOrUpdateMake
+        <AddOrUpdateCountry
           userAction={userAction}
           setUserAction={setUserAction}
           handleMakeList={handleCountryList}

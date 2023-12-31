@@ -11,7 +11,7 @@ import {
   updateCountryDetails,
 } from "../../../../redux/states/country/thunk";
 
-const AddOrUpdateMake = ({ userAction, setUserAction, handleMakeList }) => {
+const AddOrUpdateCountry = ({ userAction, setUserAction, handleMakeList }) => {
   const { countryDetails } = useSelector((state) => state.countryAndCity);
   const [formData, setFormData] = useState({});
 
@@ -149,4 +149,4 @@ const AddOrUpdateMake = ({ userAction, setUserAction, handleMakeList }) => {
   );
 };
 
-export default AddOrUpdateMake;
+export default AddOrUpdateCountry;

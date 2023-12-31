@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Accordion, Button } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import { ReactComponent as HomeIcon } from "../../assets/icons/home.svg";
 import { ReactComponent as UsersIcon } from "../../assets/icons/users.svg";
@@ -14,6 +14,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
   const handleSidebar = () => {
     setSidebar(!sidebar);
   };
+
   return (
     <>
       <div
@@ -87,7 +88,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
               </li>
               <li className="py-1">
                 <NavLink
-                  to="/reports"
+                  to="/vehicles"
                   className="d-flex text-white align-items-center gap-10 p-2 rounded-pill"
                 >
                   <span className="icn me-2">
@@ -119,60 +120,23 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                 </NavLink>
               </li>
               {/* <li className="py-1">
-                <NavLink
-                  to="/content"
-                  className="d-flex text-white align-items-center gap-10 p-2 rounded-pill"
-                >
-                  <span className="icn stroke me-2">
-                    <CoinIcon />
-                  </span>
-                  Content Pages
-                </NavLink>
-              </li> */}
-              {/* <li className="py-1">
-                <NavLink
-                  to="/settings"
-                  className="d-flex text-white align-items-center gap-10 p-2 rounded-pill"
-                >
-                  <span className="icn me-2">
-                    <SettingIcon />
-                  </span>
-                  Settings
-                </NavLink>
-              </li> */}
-
-              {/* <li className="py-1">
-                <NavLink
-                  to="/transaction"
-                  className="d-flex text-white align-items-center gap-10 p-2 rounded-pill"
-                >
-                  <span className="icn stroke me-2">
-                    <CoinIcon />
-                  </span>
-                  Transaction
-                </NavLink>
-              </li>
-               <li className="py-1">
-                <NavLink
-                  to="/manage-contest"
-                  className="d-flex text-white align-items-center gap-10 p-2 rounded-pill"
-                >
-                  <span className="icn me-2">
-                    <ContestIcon />
-                  </span>
-                  Manage Contest
-                </NavLink>
-              </li>
-              <li className="py-1">
-                <NavLink
-                  to="/admin"
-                  className="d-flex text-white align-items-center gap-10 p-2 rounded-pill"
-                >
-                  <span className="icn me-2">
-                    <UserIcon />
-                  </span>
-                  Admin
-                </NavLink>
+                <Accordion defaultActiveKey="0">
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>
+                      <NavLink
+                        to="/country"
+                        className="d-flex text-white align-items-center gap-10 p-2 rounded-pill"
+                      >
+                        <span className="icn stroke me-2">
+                          <CoinIcon />
+                        </span>
+                        Content Pages
+                      </NavLink>
+                    </Accordion.Header>
+                    <Accordion.Body>About Us</Accordion.Body>
+                    <Accordion.Body>Privacy Policy</Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
               </li> */}
             </ul>
           </div>

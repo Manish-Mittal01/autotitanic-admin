@@ -37,6 +37,7 @@ import {
   EditButton,
   SaveButton,
 } from "../../../components/common/actionButtons";
+import AddVariantPopup from "./Component/AddVariantPop";
 
 const MakeAndModel = () => {
   const navigate = useNavigate();
@@ -137,7 +138,30 @@ const MakeAndModel = () => {
                   <div className="filterWrp pb-3 px-lg-3 px-3 d-flex aling-items-center flex-wrap justify-content-between gap-10 border-bottom">
                     <div className="left d-flex align-items-center gap-10 flex-wrap">
                       <h2 className="m-0 fw-bold">Make and Model</h2>
+                    </div>
+                    {activeTab === 1 && (
+                      <div className="right d-flex align-items-center flex-wrap gap-10">
+                        <div className="d-flex text-dark align-items-center btn justify-content-center rounded-pill gap-10">
+                          <p
+                            className="m-0 fw-normal text-muted"
+                            onClick={() => {
+                              setUserAction({ type: "addMake" });
+                            }}
+                          >
+                            Add Make
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </Col>
+              <Col lg="12" className="my-2">
+                <div className="Box">
+                  <div className="filterWrp pb-3 px-lg-3 px-3 d-flex aling-items-center flex-wrap justify-content-between gap-10 border-bottom">
+                    <div className="left d-flex align-items-end gap-10 flex-wrap">
                       <div className="">
+                        <b>Category</b>
                         <Form.Select
                           name="filter_status"
                           className="form-control rounded-pill"
@@ -178,20 +202,6 @@ const MakeAndModel = () => {
                         </span>
                       </div>
                     </div>
-                    {activeTab === 1 && (
-                      <div className="right d-flex align-items-center flex-wrap gap-10">
-                        <div className="d-flex text-dark align-items-center btn justify-content-center rounded-pill gap-10">
-                          <p
-                            className="m-0 fw-normal text-muted"
-                            onClick={() => {
-                              setUserAction({ type: "addMake" });
-                            }}
-                          >
-                            Add Make
-                          </p>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
               </Col>
@@ -317,7 +327,7 @@ const MakeAndModel = () => {
                           <td className="p-3">{model.make?.label}</td>
                           <td className="p-3">{model.type?.join(", ")}</td>
                           <td className="p-3 border-0">
-                            {/* <SaveButton
+                            <SaveButton
                               tooltipText={"Add Variant"}
                               onClick={() => {
                                 setUserAction({
@@ -325,13 +335,13 @@ const MakeAndModel = () => {
                                   id: model._id,
                                 });
                               }}
-                            /> */}
+                            />
 
                             <EditButton
                               tooltipText={`Edit model`}
                               onClick={() =>
                                 setUserAction({
-                                  type: "editModel",
+                                  type: "editVariant",
                                   id: model._id,
                                 })
                               }
@@ -340,7 +350,7 @@ const MakeAndModel = () => {
                               tooltipText={"Delete Model"}
                               onClick={() =>
                                 setUserAction({
-                                  type: "deleteModel",
+                                  type: "deleteVariant",
                                   id: model._id,
                                 })
                               }
@@ -409,6 +419,14 @@ const MakeAndModel = () => {
         </section>
       </NonAuthLayout>
 
+      {(userAction?.type === "addVariant" ||
+        userAction?.type === "editVariant") && (
+        <AddVariantPopup
+          userAction={userAction}
+          setUserAction={setUserAction}
+          handleVariantList={handleVariantList}
+        />
+      )}
       {(userAction?.type === "addModel" ||
         userAction?.type === "editModel") && (
         <AddModelPopup
@@ -426,7 +444,8 @@ const MakeAndModel = () => {
       )}
 
       {(userAction?.type === "deleteMake" ||
-        userAction?.type === "deleteModel") && (
+        userAction?.type === "deleteModel" ||
+        userAction?.type === "deleteVariant") && (
         <DeletePopup
           userAction={userAction}
           setUserAction={setUserAction}

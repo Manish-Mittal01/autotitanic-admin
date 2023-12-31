@@ -26,10 +26,11 @@ const AddCityPopup = ({ userAction, setUserAction, handleCityList }) => {
     await handleApiRequest(getCityDetails, userAction.id);
   };
 
-  const handleAddOrUpdateCity = async () => {
+  const handleAddOrUpdateCity = async (e) => {
+    e.preventDefault();
     const request = {
       ...formData,
-      countryId: userAction.id,
+      country: userAction.id,
     };
 
     let response = {};
@@ -70,7 +71,7 @@ const AddCityPopup = ({ userAction, setUserAction, handleCityList }) => {
           <Modal.Title>City</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleAddOrUpdateCity}>
             <Form.Group controlId="formName">
               <Form.Label>Name</Form.Label>
               <Form.Control
