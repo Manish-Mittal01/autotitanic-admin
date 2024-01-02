@@ -700,3 +700,8 @@ div.filterWrp .searchForm input {
 .delete-pop .icn svg {
   height: 80px;
 }
+
+.accordion-button:not(.collapsed)::after,
+.accordion-button::after {
+  background-image: unset !important;
+}

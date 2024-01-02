@@ -119,25 +119,17 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                   Country & City
                 </NavLink>
               </li>
-              {/* <li className="py-1">
-                <Accordion defaultActiveKey="0">
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>
-                      <NavLink
-                        to="/country"
-                        className="d-flex text-white align-items-center gap-10 p-2 rounded-pill"
-                      >
-                        <span className="icn stroke me-2">
-                          <CoinIcon />
-                        </span>
-                        Content Pages
-                      </NavLink>
-                    </Accordion.Header>
-                    <Accordion.Body>About Us</Accordion.Body>
-                    <Accordion.Body>Privacy Policy</Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-              </li> */}
+              <li className="py-1">
+                <NavLink
+                  to="/contentPage"
+                  className="d-flex text-white align-items-center gap-10 p-2 rounded-pill"
+                >
+                  <span className="icn stroke me-2">
+                    <CoinIcon />
+                  </span>
+                  Content Pages
+                </NavLink>
+              </li>
             </ul>
           </div>
         </div>

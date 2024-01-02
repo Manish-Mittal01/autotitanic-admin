@@ -8,6 +8,7 @@ import ViewReport from "./SideTabs/Reports/View/Index";
 import UserContest from "./SideTabs/UserContest/Index";
 import CountryAndCity from "./SideTabs/countries";
 import MakeAndModel from "./SideTabs/makeAndModel/Index";
+import ContentPage from "./contentPage";
 
 const privateRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -22,6 +23,7 @@ const privateRoutes = [
   { path: "/make", component: <MakeAndModel /> },
   { path: "/country", component: <CountryAndCity /> },
   { path: "/vehicles", component: <Vehicles /> },
+  { path: "/contentPage", component: <ContentPage /> },
 ];
 
 export default privateRoutes;

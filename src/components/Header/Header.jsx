@@ -99,9 +99,9 @@ const Header = ({ sidebar, setSidebar }) => {
                     </span>
                   </h4>
                 </li>
-                <li className="px-1">
+                {/* <li className="px-1">
                   <p className="m-0">Let’s check your Details today</p>
-                </li>
+                </li> */}
               </ul>
             </div>
             <div className="logo d-lg-none position-absolute mx-auto h-100">

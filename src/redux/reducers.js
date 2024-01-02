@@ -11,6 +11,7 @@ import settingReducer from "./states/settings/slice";
 import commonSlice from "./states/common/slice";
 import makeSlice from "./states/makeAndModel/slice";
 import countrySlice from "./states/country/slice";
+import contentPageSlice from "./states/contentPage/slice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   common: commonSlice,
   makeAndModel: makeSlice,
   countryAndCity: countrySlice,
+  contentPage: contentPageSlice
 });
 
 export default rootReducer;

@@ -114,7 +114,7 @@ const CountryAndCity = () => {
                           placeholder={
                             activeTab === 1
                               ? "Search by Country"
-                              : "Search by City"
+                              : "Search by City or Country"
                           }
                           className="form-control rounded-pill"
                           onChange={debounceSearch}
