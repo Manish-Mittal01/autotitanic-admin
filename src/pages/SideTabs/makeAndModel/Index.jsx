@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  Col,
-  Container,
-  Form,
-  Nav,
-  OverlayTrigger,
-  Row,
-  Tab,
-  Table,
-} from "react-bootstrap";
+import { Col, Container, Form, Nav, OverlayTrigger, Row, Tab, Table } from "react-bootstrap";
 import { ReactComponent as EditIcon } from "../../../assets/icons/edit.svg";
 import { ReactComponent as DeleteIcon } from "../../../assets/icons/delete.svg";
 import { ReactComponent as SaveIcon } from "../../../assets/icons/save.svg";
@@ -32,18 +23,12 @@ import { categories, defaultPage } from "../../../utils/constants";
 import MyTooltip from "../../../components/common/tooltip";
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
-import {
-  DeleteButton,
-  EditButton,
-  SaveButton,
-} from "../../../components/common/actionButtons";
+import { DeleteButton, EditButton, SaveButton } from "../../../components/common/actionButtons";
 import AddVariantPopup from "./Component/AddVariantPop";
 
 const MakeAndModel = () => {
   const navigate = useNavigate();
-  const { allMakeList, allModelList, allVariantList } = useSelector(
-    (state) => state.makeAndModel
-  );
+  const { allMakeList, allModelList, allVariantList } = useSelector((state) => state.makeAndModel);
   const [userAction, setUserAction] = useState(null);
   const [activeTab, setActiveTab] = useState(1);
   const [paginationDetails, setPaginationDetails] = useState(defaultPage);
@@ -81,10 +66,12 @@ const MakeAndModel = () => {
     await handleApiRequest(deleteMake, { makeId: userAction.id });
     await handleMakeList();
   };
+
   const handleDeleteModel = async () => {
     await handleApiRequest(deleteModel, { modelId: userAction.id });
     await handleModelList();
   };
+
   const handleDeleteVariant = async () => {
     await handleApiRequest(deleteVariant, { id: userAction.id });
     await handleVariantList();
@@ -177,9 +164,7 @@ const MakeAndModel = () => {
                         >
                           <option value="">All</option>
                           {categories?.map((category) => (
-                            <option value={category.value}>
-                              {category.label}
-                            </option>
+                            <option value={category.value}>{category.label}</option>
                           ))}
                         </Form.Select>
                       </div>
@@ -264,9 +249,7 @@ const MakeAndModel = () => {
                               }}
                             />
                           </td>
-                          <td className="p-3 border-0">
-                            {make?.type?.join(", ")}
-                          </td>
+                          <td className="p-3 border-0">{make?.type?.join(", ")}</td>
                           <td className="p-3 border-0">
                             <SaveButton
                               tooltipText={"Add new model"}
@@ -308,6 +291,7 @@ const MakeAndModel = () => {
                     totalPosts={allMakeList.data?.totalCount}
                   />
                 </Tab.Pane>
+
                 <Tab.Pane eventKey="model">
                   <Table className="table  mt-4">
                     <thead className="border-0">
@@ -341,7 +325,7 @@ const MakeAndModel = () => {
                               tooltipText={`Edit model`}
                               onClick={() =>
                                 setUserAction({
-                                  type: "editVariant",
+                                  type: "editModel",
                                   id: model._id,
                                 })
                               }
@@ -350,7 +334,7 @@ const MakeAndModel = () => {
                               tooltipText={"Delete Model"}
                               onClick={() =>
                                 setUserAction({
-                                  type: "deleteVariant",
+                                  type: "deleteModel",
                                   id: model._id,
                                 })
                               }
@@ -419,16 +403,14 @@ const MakeAndModel = () => {
         </section>
       </NonAuthLayout>
 
-      {(userAction?.type === "addVariant" ||
-        userAction?.type === "editVariant") && (
+      {(userAction?.type === "addVariant" || userAction?.type === "editVariant") && (
         <AddVariantPopup
           userAction={userAction}
           setUserAction={setUserAction}
           handleVariantList={handleVariantList}
         />
       )}
-      {(userAction?.type === "addModel" ||
-        userAction?.type === "editModel") && (
+      {(userAction?.type === "addModel" || userAction?.type === "editModel") && (
         <AddModelPopup
           userAction={userAction}
           setUserAction={setUserAction}

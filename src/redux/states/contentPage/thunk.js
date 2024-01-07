@@ -37,34 +37,10 @@ export const createContentPage = createAsyncThunk(
 );
 
 export const updateContentPage = createAsyncThunk(
-  "makeAndModel/getDetails",
+  "contentPage/update",
   async (details, Thunk) => {
     try {
       const response = await axios.post(`updateContentPage`, details);
-      return response?.data;
-    } catch (error) {
-      return Thunk.rejectWithValue(error);
-    }
-  }
-);
-
-export const updateMakeDetails = createAsyncThunk(
-  "makeAndModel/update",
-  async (details, Thunk) => {
-    try {
-      const response = await axios.post(`updateMake`, details);
-      return response?.data;
-    } catch (error) {
-      return Thunk.rejectWithValue(error);
-    }
-  }
-);
-
-export const deleteMake = createAsyncThunk(
-  "makeAndModel/delete",
-  async (id, Thunk) => {
-    try {
-      const response = await axios.post(`deletemake`, id);
       return response?.data;
     } catch (error) {
       return Thunk.rejectWithValue(error);
