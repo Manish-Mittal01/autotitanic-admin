@@ -3,11 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import NonAuthLayout from "../../../Layout/NonAuthLayout";
 import { Button, Col, Container, Modal, Nav, Row, Tab } from "react-bootstrap";
 import CounterCards from "./component/CounterCards";
-import { dashboard } from "../../../redux/states/dashboard/thunks/dashboard";
-import UserChart from "./component/Chart/UserChart";
-import { listUsers } from "../../../redux/states/user/thunks/listUsers";
-import { listBlockUsers } from "../../../redux/states/user/thunks/listBlockUser";
-import { toast } from "react-toastify";
 import BarChart from "./component/Chart/BarChart";
 
 const Dashboard = () => {
@@ -86,9 +81,7 @@ const Dashboard = () => {
                 <div className="topHead d-flex align-items-start justify-content-between gap-10">
                   <div className="left">
                     <h6 className="m-0 fw-bold theme-blue">Users</h6>
-                    <p className="m-0 text-muted m-0">
-                      Check total users registered across Time
-                    </p>
+                    <p className="m-0 text-muted m-0">Check total users registered across Time</p>
                   </div>
                 </div>
                 <div className="GraphBody pt-3">
@@ -116,9 +109,7 @@ const Dashboard = () => {
                 <div className="topHead d-flex align-items-start justify-content-between gap-10">
                   <div className="left">
                     <h6 className="m-0 fw-bold theme-blue">Vehicles</h6>
-                    <p className="m-0 text-muted m-0">
-                      Check total vehicles listed across Time
-                    </p>
+                    <p className="m-0 text-muted m-0">Check total vehicles listed across Time</p>
                   </div>
                 </div>
                 <div className="GraphBody pt-3">

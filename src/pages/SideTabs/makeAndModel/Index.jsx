@@ -20,14 +20,11 @@ import AddOrUpdateMake from "./Component/AddOrUpdateMake";
 import DeletePopup from "../../../components/Modals/DeletePop";
 import MyPagination from "../../../components/common/myPagination";
 import { categories, defaultPage } from "../../../utils/constants";
-import MyTooltip from "../../../components/common/tooltip";
 import { debounce } from "lodash";
-import { useNavigate } from "react-router-dom";
 import { DeleteButton, EditButton, SaveButton } from "../../../components/common/actionButtons";
 import AddVariantPopup from "./Component/AddVariantPop";
 
 const MakeAndModel = () => {
-  const navigate = useNavigate();
   const { allMakeList, allModelList, allVariantList } = useSelector((state) => state.makeAndModel);
   const [userAction, setUserAction] = useState(null);
   const [activeTab, setActiveTab] = useState(1);
@@ -49,8 +46,9 @@ const MakeAndModel = () => {
   const handleModelList = async (searchQuery) => {
     const request = {
       ...paginationDetails,
-      search: searchQuery,
+      // search: searchQuery,
     };
+    console.log("request", request);
     await handleApiRequest(getAllModel, request);
   };
 
@@ -90,13 +88,7 @@ const MakeAndModel = () => {
   const debounceSearch = debounce(
     (e) => {
       const search = e.target.value;
-      if (activeTab === 1) {
-        handleMakeList(search);
-      } else if (activeTab === 2) {
-        handleModelList(search);
-      } else if (activeTab === 3) {
-        handleVariantList(search);
-      }
+      setPaginationDetails((prev) => ({ ...prev, search }));
     },
     [1000]
   );
@@ -113,6 +105,7 @@ const MakeAndModel = () => {
 
   // console.log("allMakeList", allMakeList);
   // console.log("allModelList", allModelList);
+  console.log("paginationDetails", paginationDetails);
 
   return (
     <>
@@ -147,7 +140,7 @@ const MakeAndModel = () => {
                 <div className="Box">
                   <div className="filterWrp pb-3 px-lg-3 px-3 d-flex aling-items-center flex-wrap justify-content-between gap-10 border-bottom">
                     <div className="left d-flex align-items-end gap-10 flex-wrap">
-                      <div className="">
+                      {/* <div className="">
                         <b>Category</b>
                         <Form.Select
                           name="filter_status"
@@ -167,7 +160,7 @@ const MakeAndModel = () => {
                             <option value={category.value}>{category.label}</option>
                           ))}
                         </Form.Select>
-                      </div>
+                      </div> */}
                       <div className="searchForm position-relative icon-with-text">
                         <input
                           name="search_string"
@@ -176,10 +169,11 @@ const MakeAndModel = () => {
                             activeTab === 1
                               ? "Search by Make"
                               : activeTab === 2
-                              ? "Search by Model"
+                              ? "Search by Make or Model"
                               : "Search by Variant"
                           }
                           className="form-control rounded-pill"
+                          value={paginationDetails.search || ""}
                           onChange={debounceSearch}
                         />
                         <span className="icn position-absolute">
@@ -212,7 +206,7 @@ const MakeAndModel = () => {
                     Model
                   </Nav.Link>
                 </Nav.Item>
-                <Nav.Item>
+                {/* <Nav.Item>
                   <Nav.Link
                     className="bg-transparent text-dark"
                     eventKey="variant"
@@ -220,7 +214,7 @@ const MakeAndModel = () => {
                   >
                     Variant
                   </Nav.Link>
-                </Nav.Item>
+                </Nav.Item> */}
               </Nav>
               <Tab.Content className="pt-3">
                 <Tab.Pane eventKey="make">
@@ -230,7 +224,7 @@ const MakeAndModel = () => {
                         <th className=" border-0 p-3">S.No.</th>
                         <th className=" border-0 p-3">Make</th>
                         <th className=" border-0 p-3">Logo</th>
-                        <th className=" border-0 p-3">type</th>
+                        {/* <th className=" border-0 p-3">type</th> */}
                         <th className=" border-0 p-3">Action</th>
                       </tr>
                     </thead>
@@ -249,7 +243,7 @@ const MakeAndModel = () => {
                               }}
                             />
                           </td>
-                          <td className="p-3 border-0">{make?.type?.join(", ")}</td>
+                          {/* <td className="p-3 border-0">{make?.type?.join(", ")}</td> */}
                           <td className="p-3 border-0">
                             <SaveButton
                               tooltipText={"Add new model"}
@@ -299,7 +293,7 @@ const MakeAndModel = () => {
                         <th className=" border-0 p-3">S.No.</th>
                         <th className=" border-0 p-3">Model</th>
                         <th className=" border-0 p-3">Make</th>
-                        <th className=" border-0 p-3">Types</th>
+                        {/* <th className=" border-0 p-3">Types</th> */}
                         <th className=" border-0 p-3">Action</th>
                       </tr>
                     </thead>
@@ -309,9 +303,9 @@ const MakeAndModel = () => {
                           <td className="p-3">{idx + 1}</td>
                           <td className="p-3">{model.label}</td>
                           <td className="p-3">{model.make?.label}</td>
-                          <td className="p-3">{model.type?.join(", ")}</td>
+                          {/* <td className="p-3">{model.type?.join(", ")}</td> */}
                           <td className="p-3 border-0">
-                            <SaveButton
+                            {/* <SaveButton
                               tooltipText={"Add Variant"}
                               onClick={() => {
                                 setUserAction({
@@ -319,7 +313,7 @@ const MakeAndModel = () => {
                                   id: model._id,
                                 });
                               }}
-                            />
+                            /> */}
 
                             <EditButton
                               tooltipText={`Edit model`}

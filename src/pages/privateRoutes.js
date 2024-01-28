@@ -4,10 +4,10 @@ import ManageContest from "./SideTabs/ManageContest/Index";
 import AddManageUser from "./SideTabs/ManageUsers/Add/Index";
 import ManageUsers from "./SideTabs/ManageUsers/Index";
 import Vehicles from "./SideTabs/Reports/Index";
-import ViewReport from "./SideTabs/Reports/View/Index";
 import UserContest from "./SideTabs/UserContest/Index";
 import CountryAndCity from "./SideTabs/countries";
 import MakeAndModel from "./SideTabs/makeAndModel/Index";
+import VehicleDetails from "./SideTabs/vehicleDetails";
 import ContentPage from "./contentPage";
 
 const privateRoutes = [
@@ -19,11 +19,11 @@ const privateRoutes = [
   { path: "/manage-contest", component: <ManageContest /> },
   { path: "/manage-contest/add", component: <AddContest /> },
   { path: "/manage-contest/edit/:id", component: <AddContest /> },
-  { path: "/reports/view/:id", component: <ViewReport /> },
   { path: "/make", component: <MakeAndModel /> },
   { path: "/country", component: <CountryAndCity /> },
-  { path: "/vehicles", component: <Vehicles /> },
+  { path: "/inventory", component: <Vehicles /> },
   { path: "/contentPage", component: <ContentPage /> },
+  { path: "/details/:id", component: <VehicleDetails /> },
 ];
 
 export default privateRoutes;

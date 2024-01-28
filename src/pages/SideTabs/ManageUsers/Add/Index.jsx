@@ -5,9 +5,6 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Switch from "react-switch";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../../../../redux/states/user/thunks/addUser";
-import { fetchUser } from "../../../../redux/states/user/thunks/fetchUser";
-import { editUser } from "../../../../redux/states/user/thunks/editUser";
 import { imageUpload } from "../../../../redux/states/common/thunk";
 
 const AddManageUser = () => {
@@ -69,14 +66,8 @@ const AddManageUser = () => {
     try {
       e.preventDefault();
       if (id) {
-        const response = await dispatch(
-          editUser({ data: formData, showLoader: true })
-        ).unwrap();
         toast.success("User Update Successfully");
       } else {
-        const response = await dispatch(
-          addUser({ data: formData, showLoader: true })
-        ).unwrap();
         toast.success("User Created Successfully");
         navigate("/manage-users");
       }
@@ -87,9 +78,6 @@ const AddManageUser = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchUser({ data: { id }, showLoader: true }))
-        .unwrap()
-        .catch((error) => console.error(error.message));
     }
   }, [id]);
 
@@ -142,9 +130,7 @@ const AddManageUser = () => {
                         </span>
                         Back
                       </Link>
-                      <h2 className="m-0 fw-bold">
-                        {id ? "Edit" : "Add"} User
-                      </h2>
+                      <h2 className="m-0 fw-bold">{id ? "Edit" : "Add"} User</h2>
                     </div>
                   </div>
                   <Form className=" px-lg-5 px-3 mt-5" onSubmit={handleSubmit}>
@@ -210,9 +196,7 @@ const AddManageUser = () => {
                           />
                           <div className="imgWrp h-100 w-100">
                             <img
-                              src={
-                                imageUrl ? imageUrl : "/assets/images/dp.jpg"
-                              }
+                              src={imageUrl ? imageUrl : "/assets/images/dp.jpg"}
                               alt=""
                               className="img-fluid rounded-circle w-100 h-100"
                             />
@@ -235,11 +219,7 @@ const AddManageUser = () => {
                         <p className="text-muted m-0 pt-2">
                           Max. Upload File Size: 5 MB{" "}
                           {imageUrl && (
-                            <a
-                              href={imageUrl}
-                              target="_blank"
-                              className="theme-clr fw-bold"
-                            >
+                            <a href={imageUrl} target="_blank" className="theme-clr fw-bold">
                               Preview
                             </a>
                           )}
@@ -268,9 +248,7 @@ const AddManageUser = () => {
                             onColor={"transparent"}
                             offHandleColor="#3D3A34"
                             onHandleColor="#FFA800"
-                            onChange={() =>
-                              handleSwitchChange("status", state.status)
-                            }
+                            onChange={() => handleSwitchChange("status", state.status)}
                             checked={state.status}
                           />
                         </div>

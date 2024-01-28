@@ -70,8 +70,6 @@ const TableData = ({ request, updateRequest }) => {
 
   const data = contests?.data;
 
-  console.log("Love", inactiveContests);
-  console.log("Love view", viewData);
   return (
     <>
       <div className="table-responsive">
@@ -117,9 +115,7 @@ const TableData = ({ request, updateRequest }) => {
                           <div className="content">{data?.media[0]?.name}</div>
                         </div>
                       </td>
-                      <td className="p-3 border-0 ws-normal para">
-                        {data?.question_title}
-                      </td>
+                      <td className="p-3 border-0 ws-normal para">{data?.question_title}</td>
                       {/* <td className="p-3 border-0 ws-normal para">
                         {data?.description}
                       </td> */}
@@ -134,20 +130,13 @@ const TableData = ({ request, updateRequest }) => {
                         />
                       </td> */}
                       <td className="p-3 border-0  ws-normal">
-                        <Link
-                          to={data.website_and_address}
-                          className="text-dark underline"
-                        >
+                        <Link to={data.website_and_address} className="text-dark underline">
                           {data.website_and_address}
                         </Link>
                       </td>
-                      <td className="p-3 border-0">
-                        ${data.participation_fee}
-                      </td>
+                      <td className="p-3 border-0">${data.participation_fee}</td>
                       <td className="p-3 border-0">{data.number_of_winners}</td>
-                      <td className="p-3 border-0">
-                        {moment(data.createdAt).format("DD MMM, Y")}
-                      </td>
+                      <td className="p-3 border-0">{moment(data.createdAt).format("DD MMM, Y")}</td>
                       <td className="p-3 border-0">
                         {" "}
                         <span
@@ -171,9 +160,7 @@ const TableData = ({ request, updateRequest }) => {
                           <Button
                             variant="transparent"
                             className="border-0 p-0"
-                            onClick={() =>
-                              navigate("/manage-contest/edit/" + data._id)
-                            }
+                            onClick={() => navigate("/manage-contest/edit/" + data._id)}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -233,10 +220,7 @@ const TableData = ({ request, updateRequest }) => {
                                   width="19"
                                   height="19"
                                 >
-                                  <path
-                                    d="M18.8324 0H0.658447V18.1739H18.8324V0Z"
-                                    fill="white"
-                                  />
+                                  <path d="M18.8324 0H0.658447V18.1739H18.8324V0Z" fill="white" />
                                 </mask>
                                 <g mask="url(#mask0_0_97)">
                                   <path

@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NonAuthLayout from "../../../Layout/NonAuthLayout";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import MUTableData from "./Component/TableData";
-import { listUsers } from "../../../redux/states/user/thunks/listUsers";
-import { Link } from "react-router-dom";
+import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
+import { handleApiRequest } from "../../../services/handleApiRequest";
+import { getAllUsers, userStatus } from "../../../redux/states/user/thunk";
 
 const ManageUsers = () => {
-  const dispatch = useDispatch();
-  const { manage_user } = useSelector((s) => s.user) ?? {};
+  const { usersList } = useSelector((state) => state.users);
   const [request, setRequest] = useState({
     search_string: "",
     filter_status: "",
@@ -16,6 +14,7 @@ const ManageUsers = () => {
     page: 1,
     showLoader: true,
   });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setRequest((prevState) => ({
@@ -24,17 +23,23 @@ const ManageUsers = () => {
     }));
   };
 
-  const updateRequest = (updatedRequest) => {
-    setRequest(updatedRequest);
+  const handleUserList = async () => {
+    const request = {};
+    await handleApiRequest(getAllUsers, request);
   };
 
-  // useEffect(() => {
-  //   dispatch(listUsers(request))
-  //     .unwrap()
-  //     .catch((error) => console.error(error.message));
-  // }, [request]);
+  const handleUserStatus = async (id) => {
+    const response = await handleApiRequest(userStatus, { userId: id });
+    if (response.status) {
+      handleUserList();
+    }
+  };
 
-  console.log("Billa ", manage_user?.data);
+  useEffect(() => {
+    handleUserList();
+  }, []);
+
+  console.log("usersList", usersList);
 
   return (
     <>
@@ -95,11 +100,71 @@ const ManageUsers = () => {
                       </div>
                     </div>
                   </div>
-                  <MUTableData
-                    requestDetails={request}
-                    setRequestDetails={updateRequest}
-                  />
                 </div>
+              </Col>
+              <Col>
+                <Table className="table  mt-4">
+                  <thead className="border-0">
+                    <tr className="secondaryColor">
+                      <th className=" border-0 p-3">S.No.</th>
+                      <th className=" border-0 p-3">Name</th>
+                      <th className=" border-0 p-3">Email</th>
+                      <th className=" border-0 p-3">Mobile</th>
+                      <th className=" border-0 p-3">Country</th>
+                      <th className=" border-0 p-3">User Type</th>
+                      <th className=" border-0 p-3">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {usersList.data?.items?.map((user, idx) => (
+                      <tr key={user._id}>
+                        <td className="p-3">{idx + 1}</td>
+                        <td className="p-3">{user.name}</td>
+                        <td className="p-3">{user.email}</td>
+                        <td className="p-3">{user.mobile}</td>
+                        <td className="p-3">{user.country}</td>
+                        <td className="p-3">{user.userType}</td>
+                        <td className="p-3">
+                          {user.status === "active" ? (
+                            <Button variant="danger" onClick={() => handleUserStatus(user._id)}>
+                              Block User
+                            </Button>
+                          ) : (
+                            <Button onClick={() => handleUserStatus(user._id)}>Unblock User</Button>
+                          )}
+                          {/* <SaveButton
+                            tooltipText={"Add Variant"}
+                            onClick={() => {
+                              setUserAction({
+                                type: "addVariant",
+                                id: model._id,
+                              });
+                            }}
+                          />
+
+                          <EditButton
+                            tooltipText={`Edit model`}
+                            onClick={() =>
+                              setUserAction({
+                                type: "editModel",
+                                id: model._id,
+                              })
+                            }
+                          />
+                          <DeleteButton
+                            tooltipText={"Delete Model"}
+                            onClick={() =>
+                              setUserAction({
+                                type: "deleteModel",
+                                id: model._id,
+                              })
+                            }
+                          /> */}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
               </Col>
             </Row>
           </Container>

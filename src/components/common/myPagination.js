@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
 import { Pagination } from "react-bootstrap";
 
-export default function MyPagination({
-  paginationDetails,
-  setPaginationDetails,
-  totalPosts,
-}) {
+export default function MyPagination({ paginationDetails, setPaginationDetails, totalPosts }) {
   const { page, limit } = paginationDetails;
   const totalPages = Math.ceil(totalPosts / limit);
   const firstPost = totalPosts === 0 ? 0 : (page - 1) * limit + 1;
@@ -15,20 +11,9 @@ export default function MyPagination({
     end: lastPost > totalPosts ? totalPosts : lastPost,
   };
 
-  useEffect(() => {
-    if (firstPost > totalPosts) {
-      setPaginationDetails((prev) => {
-        return {
-          ...prev,
-          page: prev.page - 1,
-        };
-      });
-    }
-  }, [totalPosts]);
-
   let pages = [];
 
-  if (totalPages <= 5 || page <= 3) {
+  if (totalPages <= 5) {
     for (let i = 1; i <= totalPages; i++) {
       pages.push(i);
     }
@@ -38,7 +23,7 @@ export default function MyPagination({
         pages.push(i);
       }
     } else {
-      for (let i = page - 2; i <= page + 2; i++) {
+      for (let i = Math.max(page - 2, 1); i <= page + 2; i++) {
         pages.push(i);
       }
     }
@@ -64,28 +49,39 @@ export default function MyPagination({
     setPaginationDetails({ ...paginationDetails, page: page });
   };
 
+  useEffect(() => {
+    if (firstPost > totalPosts) {
+      setPaginationDetails((prev) => {
+        return {
+          ...prev,
+          page: prev.page - 1,
+        };
+      });
+    }
+  }, [totalPosts]);
+
   // console.log("totalPosts", totalPosts);
   // console.log("totalPages", totalPages);
   // console.log("pages", pages);
   // console.log("currentPagePost", currentPagePost);
-  console.log("paginationDetails", paginationDetails);
+  // console.log("paginationDetails", paginationDetails);
 
   return (
     <div className="px-3 d-flex align-items-center justify-content-between cstmPagination flex-wrap mt-3 gap-10">
       <p className="m-0 fw-sbold">
-        Showing {currentPagePost.start || 0} - {currentPagePost.end || 0} from{" "}
-        {totalPosts || 0} data
+        Showing {currentPagePost.start || 0} - {currentPagePost.end || 0} from {totalPosts || 0}{" "}
+        data
       </p>
       <Pagination className="m-0 rounded-pill">
         <Pagination.Prev onClick={previousPage} />
-        {pages.map((page) => (
+        {pages.map((myPage) => (
           <Pagination.Item
-            key={page}
-            active={page === paginationDetails.page}
-            onClick={() => setActivePage(page)}
-            className={`pointer`}
+            key={myPage}
+            active={myPage === page}
+            onClick={() => setActivePage(myPage)}
+            className="pointer"
           >
-            {page}
+            {myPage}
           </Pagination.Item>
         ))}
         <Pagination.Next onClick={nextPage} />

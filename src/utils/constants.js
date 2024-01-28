@@ -4,13 +4,21 @@ export const defaultPage = {
 };
 
 export const categories = [
-  { value: "cars", label: "Cars" },
-  { value: "bikes", label: "Bikes" },
-  // { value: "vans", label: "Vans" },
-  // { value: "motorhomes", label: "Motorhomes" },
-  // { value: "carvana", label: "Carvana" },
-  // { value: "trucks", label: "Trucks" },
-  // { value: "farm", label: "Farm" },
-  // { value: "plant", label: "Plant" },
-  // { value: "partAndAccessories", label: "PartAndAccessories" },
+  { value: "Cars", label: "Cars" },
+  { value: "Vans", label: "Vans" },
+  { value: "Bikes", label: "Bikes" },
+  { value: "Motorhomes & Caravans", label: "Motorhomes & Caravans" },
+  { value: "Trucks", label: "Trucks" },
+  { value: "Farms", label: "Farms" },
+  { value: "Plants", label: "Plants" },
+  { value: "Car Rentals", label: "Car Rentals" },
+  { value: "Part & Accessories", label: "Part & Accessories" },
+];
+
+export const postStatus = [
+  { value: "", label: "All" },
+  { value: "pending", label: "Pending" },
+  { value: "rejected", label: "Rejected" },
+  { value: "approved", label: "Approved" },
+  { value: "deleted", label: "Deleted" },
 ];

@@ -5,9 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import UserProfileView from "../../../../components/Modals/UserProfileVIew";
-import { blockUnblockUser } from "../../../../redux/states/user/thunks/blockUnblockUser";
-import { deleteUser } from "../../../../redux/states/user/thunks/deleteUser";
-import MyPagination from "../../../../components/common/myPagination";
 
 const MUTableData = ({ requestDetails, setRequestDetails }) => {
   const dispatch = useDispatch();
@@ -20,7 +17,6 @@ const MUTableData = ({ requestDetails, setRequestDetails }) => {
   const handleDelete = async (id, event) => {
     try {
       let request = { id, showLoader: true };
-      await dispatch(deleteUser(request)).unwrap();
       toast.success("Deleted Successfully");
     } catch (error) {
       toast.error(error?.message);
@@ -30,7 +26,7 @@ const MUTableData = ({ requestDetails, setRequestDetails }) => {
   async function blockUnblock(id) {
     try {
       let request = { id, showLoader: true };
-      const response = await dispatch(blockUnblockUser(request)).unwrap();
+      const response = {};
 
       if (response?.body?.is_blocked) {
         toast.success("Blocked Successfully");
@@ -86,9 +82,7 @@ const MUTableData = ({ requestDetails, setRequestDetails }) => {
                           <Button
                             variant="transparent"
                             className="border-0 p-0"
-                            onClick={() =>
-                              navigate("/manage-users/edit/" + data._id)
-                            }
+                            onClick={() => navigate("/manage-users/edit/" + data._id)}
                           >
                             <svg
                               width="15"
@@ -178,10 +172,7 @@ const MUTableData = ({ requestDetails, setRequestDetails }) => {
                                   width="19"
                                   height="19"
                                 >
-                                  <path
-                                    d="M18.8324 0H0.658447V18.1739H18.8324V0Z"
-                                    fill="white"
-                                  />
+                                  <path d="M18.8324 0H0.658447V18.1739H18.8324V0Z" fill="white" />
                                 </mask>
                                 <g mask="url(#mask0_0_97)">
                                   <path

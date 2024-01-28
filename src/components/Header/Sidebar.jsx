@@ -17,9 +17,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
 
   return (
     <>
-      <div
-        className={`Sidebar position-relative p-3 pe-0 ${sidebar && "active"}`}
-      >
+      <div className={`Sidebar position-relative p-3 pe-0 ${sidebar && "active"}`}>
         <Button
           onClick={handleSidebar}
           className="border-0 p-0 position-absolute closeBtn d-lg-none"
@@ -74,7 +72,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                   Manage Users
                 </NavLink>
               </li>
-              <li className="py-1">
+              {/* <li className="py-1">
                 <NavLink
                   to="/user-contest"
                   // to="/featured-adds-users"
@@ -85,16 +83,16 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                   </span>
                   Posts
                 </NavLink>
-              </li>
+              </li> */}
               <li className="py-1">
                 <NavLink
-                  to="/vehicles"
+                  to="/inventory"
                   className="d-flex text-white align-items-center gap-10 p-2 rounded-pill"
                 >
                   <span className="icn me-2">
                     <FactoryIcon />
                   </span>
-                  Vehicles
+                  Inventory
                 </NavLink>
               </li>
               <li className="py-1">

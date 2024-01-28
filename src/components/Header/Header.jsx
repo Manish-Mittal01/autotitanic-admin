@@ -55,7 +55,7 @@ const Header = ({ sidebar, setSidebar }) => {
 
   // console.log("admin", admin);
   // console.log("admin.image", admin?.image);
-  console.log("time", time);
+  // console.log("time", time);
 
   return (
     <>
@@ -91,11 +91,7 @@ const Header = ({ sidebar, setSidebar }) => {
                       : "Good Evening"}{" "}
                     {admin?.name}
                     <span className="icn">
-                      <img
-                        src="/assets/images/hello.svg"
-                        alt=""
-                        className="img-fluid"
-                      />
+                      <img src="/assets/images/hello.svg" alt="" className="img-fluid" />
                     </span>
                   </h4>
                 </li>
@@ -106,11 +102,7 @@ const Header = ({ sidebar, setSidebar }) => {
             </div>
             <div className="logo d-lg-none position-absolute mx-auto h-100">
               <Link to="" className="h-100">
-                <img
-                  src={"/assets/images/mainLogo.png"}
-                  alt=""
-                  className="img-fluid h-100"
-                />
+                <img src={"/assets/images/mainLogo.png"} alt="" className="img-fluid h-100" />
               </Link>
             </div>
             <div className="right ">
@@ -185,10 +177,7 @@ const Header = ({ sidebar, setSidebar }) => {
         />
       )}
       {changingPassword && (
-        <ChangePassword
-          data={admin}
-          closeModal={() => setChangingPassword((prev) => !prev)}
-        />
+        <ChangePassword data={admin} closeModal={() => setChangingPassword((prev) => !prev)} />
       )}
       {editingProfile && (
         <UpdateProfile

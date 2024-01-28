@@ -51,10 +51,6 @@ const UserContest = () => {
                       </div>
                     </div>
                   </div>
-                  {/* <TableData
-                    ContestPop={ContestPop}
-                    setContestPop={setContestPop}
-                  /> */}
                 </div>
               </Col>
             </Row>
