@@ -77,9 +77,7 @@ const AddOrUpdateCountry = ({ userAction, setUserAction, handleMakeList }) => {
       <Modal show={!!userAction} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
-            {userAction.type === "editCountry"
-              ? "Update Country"
-              : "Add Country"}
+            {userAction.type === "editCountry" ? "Update Country" : "Add Country"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -97,21 +95,18 @@ const AddOrUpdateCountry = ({ userAction, setUserAction, handleMakeList }) => {
 
             <Form.Group controlId="formPhoto">
               <Form.Label className="my-2">Country Flag</Form.Label>
-              <br />
-              <div className="FileExplorerBtnwrapper">
-                <Button className="pointer">Upload logo</Button>
-                <input type="file" onChange={handleFlagUpload} />
-              </div>
             </Form.Group>
 
             <Form.Group controlId="formLogo">
               {formData?.flag && (
-                <img
-                  src={formData?.flag}
-                  style={{ height: "100px", width: "100px" }}
-                />
+                <img src={formData?.flag} style={{ height: "100px", width: "100px" }} />
               )}
             </Form.Group>
+
+            <div className="FileExplorerBtnwrapper">
+              <Button className="pointer">Upload Flag</Button>
+              <input type="file" onChange={handleFlagUpload} />
+            </div>
 
             <Form.Group controlId="formName">
               <Form.Label>Currency</Form.Label>

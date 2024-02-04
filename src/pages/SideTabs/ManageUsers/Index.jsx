@@ -122,7 +122,7 @@ const ManageUsers = () => {
                         <td className="p-3">{user.name}</td>
                         <td className="p-3">{user.email}</td>
                         <td className="p-3">{user.mobile}</td>
-                        <td className="p-3">{user.country}</td>
+                        <td className="p-3">{user.country?.name}</td>
                         <td className="p-3">{user.userType}</td>
                         <td className="p-3">
                           {user.status === "active" ? (

@@ -173,7 +173,7 @@ const MakeAndModel = () => {
                               : "Search by Variant"
                           }
                           className="form-control rounded-pill"
-                          value={paginationDetails.search || ""}
+                          // value={paginationDetails.search || ""}
                           onChange={debounceSearch}
                         />
                         <span className="icn position-absolute">

@@ -61,7 +61,7 @@ const Vehicles = () => {
                     <b>Status</b>
                     <Select
                       options={postStatus}
-                      value={filters.status}
+                      value={filters.status || ""}
                       onChange={(selected) => {
                         handleChange("status", selected);
                       }}

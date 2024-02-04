@@ -53,7 +53,7 @@ export default function VehicleCard({ vehicle, handleVehicleList, wishlist }) {
         >
           <img
             ref={imageRef}
-            src={vehicle.media?.[0].url}
+            src={vehicle.media?.[0]?.url}
             className="mainImage w-100"
             style={{ height: mainImageWidth }}
           />
@@ -67,7 +67,7 @@ export default function VehicleCard({ vehicle, handleVehicleList, wishlist }) {
           {vehicle.media?.slice(1, 4).map((image, i) => (
             <img
               key={image}
-              src={image.url}
+              src={image?.url}
               className={`sideImage`}
               style={{ marginBlock: i === 1 ? 1 : 0 }}
             />
@@ -100,7 +100,7 @@ export default function VehicleCard({ vehicle, handleVehicleList, wishlist }) {
           </div>
           <div style={{ flex: 1 }} onClick={() => navigate(`/details/${vehicle._id}`)} />
           <div className="d-flex align-items-center">
-            {vehicle.status === "pending" ? (
+            {vehicle?.status === "pending" ? (
               <>
                 <Button
                   variant="success"
@@ -117,16 +117,16 @@ export default function VehicleCard({ vehicle, handleVehicleList, wishlist }) {
                   Reject
                 </Button>
               </>
-            ) : vehicle.status === "approved" ? (
+            ) : vehicle?.status === "approved" ? (
               <p className="successMsg">Approved</p>
-            ) : vehicle.status === "rejected" ? (
+            ) : vehicle?.status === "rejected" ? (
               <p className="rejectMsg">Rejected</p>
-            ) : vehicle.status === "deleted" ? (
+            ) : vehicle?.status === "deleted" ? (
               <p className="rejectMsg">Deleted</p>
             ) : (
               ""
             )}
-            {vehicle.isFeatured ? (
+            {vehicle?.isFeatured ? (
               <Button className="mx-1" onClick={() => handlePost({ isFeatured: false })}>
                 Remove featured
               </Button>

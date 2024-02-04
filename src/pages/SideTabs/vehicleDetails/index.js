@@ -71,12 +71,18 @@ export default function VehicleDetails() {
                       Reject
                     </p>
                   </>
-                ) : vehicle.status === "approved" ? (
-                  <p className="successMsg">Approved</p>
-                ) : vehicle.status === "rejected" ? (
-                  <p className="rejectMsg">Rejected</p>
-                ) : vehicle.status === "deleted" ? (
-                  <p className="rejectMsg">Deleted</p>
+                ) : detail?.status === "approved" ? (
+                  <p className="successMsg rounded-pill m-0" style={{ height: "fit-content" }}>
+                    Approved
+                  </p>
+                ) : detail?.status === "rejected" ? (
+                  <p className="rejectMsg rounded-pill m-0" style={{ height: "fit-content" }}>
+                    Rejected
+                  </p>
+                ) : detail?.status === "deleted" ? (
+                  <p className="rejectMsg rounded-pill m-0" style={{ height: "fit-content" }}>
+                    Deleted
+                  </p>
                 ) : (
                   ""
                 )}
@@ -144,7 +150,7 @@ export default function VehicleDetails() {
                   key !== "price" &&
                   key !== "currency" &&
                   key !== "updatedAt" && (
-                    <Row className="my-2">
+                    <Row className="">
                       <Col xs={5} className="small">
                         {parseCamelKey(key)}
                       </Col>
